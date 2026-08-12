@@ -1,7 +1,7 @@
 FROM nginx:alpine
-# Copiar ambas versiones
 COPY glenngo/ /usr/share/nginx/html/glenngo/
 COPY replai-pilot/ /usr/share/nginx/html/replai-pilot/
-# nginx config que distingue por Host header
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
+# Cambiar puerto a 3000 para Coolify
+RUN sed -i 's/listen 80/listen 3000/' /etc/nginx/conf.d/default.conf
+EXPOSE 3000
