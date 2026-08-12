@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOLUCIONES DIGITALES PARA TU NEGOCIO</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--d:#0a0f0c;--g:#075b30;--gb:#178a3b;--o:#f58438;--c:#f5f3ef;--gr:#8a8a8a;--b:#1a2520;--card:rgba(255,255,255,.03)}
+  body{font-family:'Inter',sans-serif;background:var(--d);color:var(--c);line-height:1.6;overflow-x:hidden}
+  .ctn{max-width:940px;margin:0 auto;padding:0 24px}
+
+  /* === ANIMATIONS === */
+  @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  @keyframes pulse{0%,100%{opacity:.4}50%{opacity:.8}}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+  .reveal.in{opacity:1;transform:translateY(0)}
+
+  /* === HEADER LOGO === */
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,15,12,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--b);padding:14px 0}
+  .topbar-inner{max-width:940px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center}
+  .topbar img{height:32px;width:auto}
+  .topbar .badge-sm{font-size:11px;font-weight:700;color:var(--o);text-transform:uppercase;letter-spacing:1px}
+
+  /* === HERO === */
+  .hero{min-height:90vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;
+    background:linear-gradient(135deg,#0a0f0c 0%,#0d2818 40%,#0a1f12 60%,#0a0f0c 100%);background-size:200% 200%;animation:gradientShift 15s ease infinite}
+  .hero::before{content:'';position:absolute;inset:0;
+    background-image:radial-gradient(circle at 20% 30%,rgba(245,132,56,.08) 0%,transparent 50%),radial-gradient(circle at 80% 70%,rgba(23,138,59,.1) 0%,transparent 50%),radial-gradient(circle at 50% 50%,rgba(7,91,48,.05) 0%,transparent 70%);pointer-events:none}
+  .hero::after{content:'';position:absolute;inset:0;background-image:
+    linear-gradient(rgba(245,132,56,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(245,132,56,.03) 1px,transparent 1px);
+    background-size:50px 50px;pointer-events:none;mask-image:radial-gradient(ellipse at center,black 30%,transparent 80%)}
+  .hero-inner{position:relative;z-index:2;max-width:760px;padding:0 24px}
+  .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;background:rgba(245,132,56,.08);border:1px solid rgba(245,132,56,.25);border-radius:100px;font-size:13px;font-weight:600;color:var(--o);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:36px;animation:fadeUp .8s ease}
+  .hero-dot{width:8px;height:8px;border-radius:50%;background:var(--o);animation:pulse 2s infinite}
+  .hero h1{font-size:46px;font-weight:900;letter-spacing:-1.5px;margin-bottom:20px;line-height:1.1;
+    background:linear-gradient(135deg,#f5f3ef 0%,#178a3b 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:fadeUp 1s ease .1s both}
+  .hero p{font-size:18px;color:#b0b0a8;max-width:660px;margin:0 auto;line-height:1.7;animation:fadeUp 1s ease .2s both}
+  .hero p strong{color:var(--gb)}
+  .hero p .accent{color:var(--o)}
+  .hero-stats{display:flex;justify-content:center;gap:40px;margin-top:40px;animation:fadeUp 1s ease .3s both}
+  .hero-stat{text-align:center}
+  .hero-stat .num{font-size:24px;font-weight:900;color:var(--o)}
+  .hero-stat .lbl{font-size:12px;color:var(--gr);text-transform:uppercase;letter-spacing:1px}
+
+  /* === SECTIONS === */
+  .sec{padding:70px 0;border-bottom:1px solid var(--b)}
+  .sec-t{text-transform:uppercase;letter-spacing:.5px}
+  .sec-head{margin-bottom:44px}
+  .sec-t{font-size:30px;font-weight:800;margin-bottom:8px}
+  .sec-s{font-size:16px;color:var(--gr)}
+
+  /* === PROBLEM === */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .card{background:var(--card);border:1px solid var(--b);border-radius:14px;padding:28px;transition:border-color .3s,transform .3s}
+  .card:hover{border-color:rgba(245,132,56,.3);transform:translateY(-2px)}
+  .card .ic{font-size:30px;margin-bottom:14px}
+  .card h3{font-size:17px;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+  .card p{font-size:14px;color:var(--gr)}
+
+  /* === SERVICE CARDS === */
+  .svc{background:var(--card);border:1px solid var(--b);border-radius:18px;margin-bottom:24px;overflow:hidden;transition:border-color .3s}
+  .svc:hover{border-color:rgba(23,138,59,.25)}
+  .svc-inner{display:grid;grid-template-columns:1fr 240px;gap:0}
+  .svc-info{padding:28px}
+  .svc-tag{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--o);margin-bottom:10px;padding:4px 12px;background:rgba(245,132,56,.08);border-radius:100px}
+  .svc-info h3{font-size:21px;font-weight:800;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+  .svc-info h3 a{color:inherit;text-decoration:none;border-bottom:2px solid var(--o)}
+  .svc-info h3 a:hover{opacity:.8}
+  .svc-info>p{font-size:14px;color:var(--gr);margin-bottom:12px}
+  .svc-info ul{list-style:none;font-size:13px;color:var(--gr);display:grid;grid-template-columns:1fr 1fr;gap:4px 16px}
+  .svc-info ul li{padding:4px 0;padding-left:22px;position:relative}
+  .svc-info ul li::before{content:"✓";position:absolute;left:0;top:4px;color:var(--gb);font-weight:800}
+  .svc-optional{margin-top:12px;padding:12px 16px;background:rgba(245,132,56,.05);border:1px solid rgba(245,132,56,.15);border-radius:10px;font-size:13px;color:#c0c0b8;line-height:1.6}
+  .svc-optional strong{color:var(--o)}
+  .svc-see-more{margin-top:14px;font-size:13px;color:var(--o);font-weight:600}
+  .svc-price{background:rgba(0,0,0,.2);padding:28px 24px;display:flex;flex-direction:column;justify-content:center;border-left:1px solid var(--b)}
+  .svc-price .lbl{font-size:11px;color:var(--gr);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+  .svc-price .amt{font-size:32px;font-weight:900;color:var(--gb);line-height:1}
+  .svc-price .per{font-size:14px;color:var(--gr);margin-bottom:12px}
+  .svc-price .setup-box{margin-top:auto;padding-top:12px;border-top:1px solid var(--b)}
+  .svc-price .setup-lbl{font-size:10px;color:var(--gr);text-transform:uppercase;letter-spacing:1px}
+  .svc-price .setup-amt{font-size:18px;font-weight:700;color:var(--o)}
+  .svc-price .setup-note{font-size:11px;color:var(--gr)}
+
+  /* === PLAN CARDS (4) === */
+  .plans-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;margin-top:24px}
+  .plan-card{background:var(--card);border:1px solid var(--b);border-radius:16px;overflow:hidden;transition:transform .3s}
+  .plan-card:hover{transform:translateY(-4px)}
+  .plan-card.g{border-color:rgba(23,138,59,.2)}
+  .plan-card.m{border-color:rgba(245,132,56,.2)}
+  .plan-card.m.hot{border-color:var(--o);box-shadow:0 0 30px rgba(245,132,56,.06)}
+  .plan-hd{padding:22px 20px;background:rgba(0,0,0,.15);border-bottom:1px solid var(--b)}
+  .plan-nm{font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;line-height:1.3}
+  .plan-pr{display:flex;align-items:baseline;gap:4px;margin-top:12px}
+  .plan-pr .a{font-size:28px;font-weight:900;color:var(--gb);line-height:1}
+  .plan-pr .p{font-size:13px;color:var(--gr)}
+  .plan-su{font-size:12px;color:var(--gr);margin-top:8px}
+  .plan-su strong{color:var(--o)}
+  .plan-bd{padding:20px}
+  .plan-bd ul{list-style:none}
+  .plan-bd ul li{padding:5px 0;font-size:13px;display:flex;align-items:flex-start;gap:8px;line-height:1.4}
+  .plan-bd ul li::before{content:"✓";color:var(--gb);font-weight:800;flex-shrink:0}
+  .plan-break{font-size:11px;color:var(--gr);margin-top:8px;padding-top:8px;border-top:1px solid var(--b)}
+
+  /* === COMBOS === */
+  .combos{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px}
+  .combo{background:var(--card);border:1px solid var(--b);border-radius:18px;overflow:hidden;position:relative;transition:transform .3s,box-shadow .3s}
+  .combo:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+  .combo.hot{border-color:var(--o);box-shadow:0 0 50px rgba(245,132,56,.06)}
+  .combo-badge{position:absolute;top:0;right:0;background:var(--o);color:var(--d);font-size:11px;font-weight:800;padding:7px 18px;border-radius:0 0 0 12px;text-transform:uppercase;letter-spacing:1px;z-index:3}
+  .combo-hd{padding:34px 30px 22px;border-bottom:1px solid var(--b);background:rgba(0,0,0,.15)}
+  .combo-nm{font-size:22px;font-weight:800;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+  .combo-tg{font-size:13px;color:var(--gr);margin-bottom:22px}
+  .combo-pr{display:flex;align-items:baseline;gap:6px}
+  .combo-pr .a{font-size:40px;font-weight:900;color:var(--gb);line-height:1}
+  .combo-pr .p{font-size:15px;color:var(--gr)}
+  .combo-su{margin-top:10px;font-size:13px;color:var(--gr)}
+  .combo-su strong{color:var(--o)}
+  .save{display:inline-block;background:rgba(23,138,59,.15);color:var(--gb);font-size:12px;font-weight:700;padding:4px 12px;border-radius:100px;margin-left:6px}
+  .combo-bd{padding:26px 30px}
+  .combo-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--o);margin:22px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--b)}
+  .combo-lbl:first-child{margin-top:0}
+  .fl{list-style:none}
+  .fl li{padding:8px 0;font-size:14px;display:flex;align-items:flex-start;gap:10px;line-height:1.5}
+  .fl li::before{content:"✓";color:var(--gb);font-weight:800;flex-shrink:0;margin-top:1px}
+
+  /* === TABLE === */
+  .tbl{width:100%;border-collapse:collapse;margin-top:20px;font-size:14px}
+  .tbl th{text-align:left;padding:14px 16px;background:rgba(255,255,255,.03);font-weight:700;color:var(--gr);border-bottom:2px solid var(--b);font-size:11px;text-transform:uppercase;letter-spacing:1px}
+  .tbl td{padding:14px 16px;border-bottom:1px solid var(--b)}
+  .tbl tr:last-child td{border-bottom:none}
+  .chk{color:var(--gb);font-weight:700}
+  .crs{color:#444}
+  .em{font-size:18px;font-weight:800;color:var(--gb)}
+
+  /* === SETUP === */
+  .setup-box{background:linear-gradient(135deg,rgba(7,91,48,.08),rgba(23,138,59,.04));border:1px solid rgba(7,91,48,.2);border-radius:18px;padding:36px;margin-top:20px}
+  .setup-box h3{font-size:22px;font-weight:800;margin-bottom:14px;text-transform:uppercase}
+  .setup-box>p{font-size:15px;color:var(--gr);margin-bottom:14px;line-height:1.7}
+  .setup-steps{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px}
+  .setup-step{display:flex;gap:16px;align-items:flex-start;padding:20px;background:rgba(0,0,0,.2);border-radius:14px;border:1px solid var(--b)}
+  .setup-step .n{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--g),var(--gb));display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;flex-shrink:0;color:var(--c)}
+  .setup-step h4{font-size:13px;font-weight:700;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+  .setup-step p{font-size:13px;color:var(--gr)}
+
+  /* === VS COMPETITION — WOW (NO COLUMNAS, LISTA SIMPLE) === */
+  .vs-grid{display:grid;grid-template-columns:1fr;gap:20px;margin-top:24px}
+  .vs-block{border-radius:18px;padding:32px 36px;position:relative}
+  .vs-them{background:rgba(255,255,255,.02);border:1px solid #2a2a2a}
+  .vs-us{background:linear-gradient(135deg,rgba(23,138,59,.08),rgba(7,91,48,.04));border:1px solid rgba(23,138,59,.3)}
+  .vs-block h3{font-size:20px;font-weight:800;margin-bottom:20px;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+  .vs-them h3{color:#666}
+  .vs-them h3 .ico{font-size:24px}
+  .vs-us h3{color:var(--gb)}
+  .vs-us h3 .ico{font-size:24px}
+  .vs-block ul{list-style:none}
+  .vs-block ul li{padding:10px 0;font-size:15px;display:flex;align-items:flex-start;gap:12px;line-height:1.6}
+  .vs-them ul li::before{content:"✗";color:#555;font-weight:800;flex-shrink:0;margin-top:2px}
+  .vs-us ul li::before{content:"✓";color:var(--gb);font-weight:800;flex-shrink:0;margin-top:2px}
+
+  /* === REPORTS === */
+  .rep-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:24px}
+  .rep-item{text-align:center;padding:28px 20px;background:var(--card);border:1px solid var(--b);border-radius:14px;transition:transform .3s,border-color .3s}
+  .rep-item:hover{transform:translateY(-3px);border-color:rgba(23,138,59,.2)}
+  .rep-item .ic{font-size:36px;margin-bottom:14px;display:inline-block;animation:float 3s ease infinite}
+  .rep-item h4{font-size:14px;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+  .rep-item p{font-size:13px;color:var(--gr)}
+
+  /* === ETAPAS === */
+  .tl{display:flex;flex-direction:column;gap:0;position:relative;margin-top:20px}
+  .tl::before{content:'';position:absolute;left:18px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--g),var(--gb),var(--o));opacity:.3}
+  .tl-i{display:flex;gap:24px;align-items:flex-start;padding-bottom:28px;position:relative}
+  .tl-n{width:38px;height:38px;border-radius:50%;background:var(--d);border:2px solid var(--gb);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;flex-shrink:0;z-index:2;color:var(--gb)}
+  .tl-i.active .tl-n{background:linear-gradient(135deg,var(--g),var(--gb));color:var(--c)}
+  .tl-c{flex:1;padding-top:2px}
+  .tl-c h4{font-size:15px;font-weight:700;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+  .tl-c p{font-size:14px;color:var(--gr)}
+  .tl-c .t{display:inline-block;font-size:11px;color:var(--o);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-top:6px;padding:3px 10px;background:rgba(245,132,56,.08);border-radius:100px}
+
+  /* === KPI === */
+  .kpi-g{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .kpi-c{background:var(--card);border:1px solid var(--b);border-radius:14px;padding:24px;text-align:center;transition:transform .3s}
+  .kpi-c:hover{transform:translateY(-3px)}
+  .kpi-c .nm{font-size:30px;font-weight:900;color:var(--o);margin-bottom:6px}
+  .kpi-c .lb{font-size:11px;color:var(--gr);text-transform:uppercase;letter-spacing:1px}
+
+  /* === WHAT WE NEED === */
+  .need-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .need-card{background:var(--card);border:1px solid var(--b);border-radius:14px;padding:28px;display:flex;gap:18px;align-items:flex-start;transition:border-color .3s}
+  .need-card:hover{border-color:rgba(245,132,56,.25)}
+  .need-card .ic{font-size:28px;flex-shrink:0}
+  .need-card h3{font-size:16px;font-weight:700;margin-bottom:6px;text-transform:uppercase}
+  .need-card p{font-size:14px;color:var(--gr)}
+
+  /* === NOTE === */
+  .note{background:rgba(245,132,56,.05);border:1px solid rgba(245,132,56,.2);border-radius:14px;padding:22px;margin-top:28px;font-size:13px;color:var(--gr);line-height:1.7}
+  .note strong{color:var(--o)}
+
+  /* === CTA === */
+  .cta{text-align:center;padding:80px 0;background:linear-gradient(135deg,rgba(7,91,48,.1),rgba(245,132,56,.05));position:relative;overflow:hidden}
+  .cta::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 50% 50%,rgba(245,132,56,.05) 0%,transparent 60%);pointer-events:none}
+  .cta-btn{display:inline-block;padding:18px 44px;background:var(--o);color:var(--d);font-weight:800;font-size:17px;border-radius:100px;text-decoration:none;margin-top:24px;letter-spacing:.5px;transition:transform .3s,box-shadow .3s;position:relative;z-index:2}
+  .cta-btn:hover{transform:scale(1.05);box-shadow:0 8px 30px rgba(245,132,56,.3)}
+
+  /* === FOOTER === */
+  .ft{padding:44px 0;text-align:center;border-top:1px solid var(--b)}
+  .ft .gn{font-weight:800;color:var(--gb);font-size:18px;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px}
+  .ft p{font-size:13px;color:var(--gr);margin-bottom:4px}
+  .ft img{height:28px;margin-bottom:8px}
+
+  @media(max-width:768px){
+    .hero h1{font-size:30px}
+    .hero-stats{flex-wrap:wrap;gap:20px}
+    .grid2,.combos,.svc-inner,.setup-steps,.need-grid{grid-template-columns:1fr}
+    .kpi-g,.rep-grid,.plans-grid{grid-template-columns:1fr 1fr}
+    .svc-price{border-left:none;border-top:1px solid var(--b);flex-direction:row;align-items:center;gap:16px;flex-wrap:wrap}
+    .svc-info ul{grid-template-columns:1fr}
+    .vs-block{padding:24px 20px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== TOPBAR CON LOGO ========== -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <img src="replaipilot-h-dark.svg" alt="REPLai Pilot">
+    <span class="badge-sm">PROPUESTA COMERCIAL</span>
+  </div>
+</div>
+
+<!-- ========== HERO ========== -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="hero-dot"></span> PROPUESTA COMERCIAL · SOLUCIONES INTEGRALES</div>
+    <h1>MÁS CLIENTES,<br>MEJOR CONECTADOS</h1>
+    <p>Combinamos <strong>diseño web profesional</strong>, <span class="accent">campañas de Google Ads y Meta Ads</span>, e <strong>Inteligencia Artificial</strong> con SEO orgánico integrado en cada línea de código — optimizado para tu nicho, tu ciudad y los algoritmos de Google siempre actualizados.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">4</div><div class="lbl">Servicios</div></div>
+      <div class="hero-stat"><div class="num">2</div><div class="lbl">Paquetes</div></div>
+      <div class="hero-stat"><div class="num">24/7</div><div class="lbl">Con IA</div></div>
+      <div class="hero-stat"><div class="num">15 días</div><div class="lb">Entre reportes</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== EL PROBLEMA ========== -->
+<div class="sec">
+  <div class="ctn">
+    <div class="sec-head reveal">
+      <h2 class="sec-t">EL PROBLEMA REAL</h2>
+      <p class="sec-s">Cuando alguien en tu ciudad busca tu servicio, ¿te encuentra? Tu competencia sí.</p>
+    </div>
+    <div class="grid2">
+      <div class="card reveal"><div class="ic">🔍</div><h3>NO APARECES EN GOOGLE MAPS</h3><p>El 76% de las búsquedas de servicios locales terminan en Google Maps. Sin perfil de negocio, eres invisible.</p></div>
+      <div class="card reveal"><div class="ic">💸</div><h3>MARKETING SIN MEDIR</h3><p>Las recomendaciones de boca en boca son valiosas, pero no escalables. Necesitas un sistema predecible de clientes nuevos.</p></div>
+      <div class="card reveal"><div class="ic">⏰</div><h3>LEADS QUE SE ENFRÍAN</h3><p>Cada minuto que tardas en responder un WhatsApp es un cliente potencial que se va con la competencia.</p></div>
+      <div class="card reveal"><div class="ic">📱</div><h3>SIN PRESENCIA EN REDES</h3><p>Tus clientes pasan 3+ horas al día en Facebook e Instagram. Si no estás ahí, pierdes visibilidad gratuita.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SERVICIOS INDIVIDUALES ========== -->
+<div class="sec">
+  <div class="ctn">
+    <div class="sec-head reveal">
+      <h2 class="sec-t">ELIGE LO QUE TU NEGOCIO NECESITA</h2>
+      <p class="sec-s">Cada servicio funciona por sí solo. Pero funcionan mejor juntos — como un excelente coche necesita un excelente motor.</p>
+    </div>
+
+    <!-- REPLAI PILOT -->
+    <div class="svc reveal">
+      <div class="svc-inner">
+        <div class="svc-info">
+          <span class="svc-tag">🤖 INTELIGENCIA ARTIFICIAL</span>
+          <h3><a href="https://replaipilot.com" target="_blank" rel="noopener">REPLAI PILOT</a> — ASISTENTE WHATSAPP 24/7</h3>
+          <p>IA que responde WhatsApp automáticamente, califica clientes, agenda servicios y gestiona conversaciones desde un Dashboard centralizado.</p>
+          <ul>
+            <li>Respuestas inmediatas 24/7</li>
+            <li>Calificación automática de leads</li>
+            <li>Dashboard con métricas</li>
+            <li>Versión VIP FumiPlus</li>
+          </ul>
+        </div>
+        <div class="svc-price">
+          <div class="lbl">IMPLEMENTACIÓN</div>
+          <div class="amt">$2,990</div>
+          <div class="per">Pago único · TDC y MSI</div>
+          <div class="setup-box">
+            <div class="setup-lbl">MENSUALIDAD</div>
+            <div class="setup-note">Según plan elegido<br>Descuentos 15-35% anualidad<br>replaipilot.com/es#pricing</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEB -->
+    <div class="svc reveal">
+      <div class="svc-inner">
+        <div class="svc-info">
+          <span class="svc-tag">🌐 DISEÑO WEB PROFESIONAL</span>
+          <h3>SITIO WEB SEO + HOSTING VPS</h3>
+          <p>Web App semántica con SEO completo, optimizada para Google, responsiva y con todo incluido por un año.</p>
+          <ul>
+            <li>Diseño + desarrollo + vinculaciones</li>
+            <li>10 emails corporativos</li>
+            <li>Imágenes, videos y animaciones</li>
+            <li>Vinculación WhatsApp + redes</li>
+            <li>Formulario · Español/Inglés</li>
+            <li>Metatags + Keywords + Sitemap XML</li>
+            <li>Dominio + Hosting VPS (1 año)</li>
+            <li>Registro + indexación Google</li>
+          </ul>
+          <div class="svc-optional"><strong>Opcional:</strong> ChatBot REPLai Pilot integrado en la web — <strong>$950/mes</strong> adicionales.<br><strong>Nota:</strong> Requiere tener REPLai Pilot contratado para funcionar.</div>
+        </div>
+        <div class="svc-price">
+          <div class="lbl">TODO INCLUIDO 1 AÑO</div>
+          <div class="amt">$5,300</div>
+          <div class="per">Precio promocional · Pago único</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GOOGLE ADS -->
+    <div class="svc reveal">
+      <div class="svc-inner">
+        <div class="svc-info">
+          <span class="svc-tag">📊 PUBLICIDAD EN GOOGLE</span>
+          <h3>MARKETING GOOGLE ADS</h3>
+          <p>Aparece en las primeras búsquedas de Google cuando alguien busca tu servicio. Pagas solo cuando alguien hace clic en tu anuncio.</p>
+          <ul>
+            <li>Research de keywords de tu ciudad</li>
+            <li>Redacción de anuncios persuasivos</li>
+            <li>Configuración de conversiones</li>
+            <li>Extensiones de anuncio</li>
+          </ul>
+          <div class="svc-see-more">↓ VER PLANES ESENCIAL Y BUSINESS MÁS ABAJO</div>
+        </div>
+        <div class="svc-price">
+          <div class="lbl">DESDE</div>
+          <div class="amt">$4,000</div>
+          <div class="per">/ mes · Manejo + pauta mínima</div>
+          <div class="setup-box">
+            <div class="setup-lbl">SETUP PAGO ÚNICO</div>
+            <div class="setup-amt">$2,500</div>
+            <div class="setup-note">Configuración completa inicial</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- META ADS -->
+    <div class="svc reveal">
+      <div class="svc-inner">
+        <div class="svc-info">
+          <span class="svc-tag">📱 FACEBOOK + INSTAGRAM</span>
+          <h3>MARKETING META ADS</h3>
+          <p>Llega a tus clientes donde pasan más tiempo: Facebook e Instagram. Dos planes según tu presupuesto. Incluye setup completo de Business Manager, creación de páginas si no existen, y Pixel instalado.</p>
+          <ul>
+            <li><strong>Esencial ($4,500/mes):</strong> 1 video + 2 imágenes, reporte quincenal</li>
+            <li><strong>Business ($7,500/mes):</strong> 2 videos + 4 imágenes, remarketing, A/B testing</li>
+            <li>Ambos incluyen manejo + pauta + creatividades</li>
+          </ul>
+          <div class="svc-see-more">↓ VER DETALLE DE PLANES MÁS ABAJO</div>
+        </div>
+        <div class="svc-price">
+          <div class="lbl">DESDE</div>
+          <div class="amt">$4,500</div>
+          <div class="per">/ mes · Todo incluido</div>
+          <div class="setup-box">
+            <div class="setup-lbl">SETUP PAGO ÚNICO</div>
+            <div class="setup-amt">$2,000</div>
+            <div class="setup-note">Si no tienen redes creadas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PLANES DETALLADOS ========== -->
+<div class="sec">
+  <div class="ctn">
+    <div class="sec-head reveal">
+      <h2 class="sec-t">PLANES DE MARKETING DETALLADOS</h2>
+      <p class="sec-s">Google Ads y Meta Ads con dos niveles cada uno. Precios claros y transparentes.</p>
+    </div>
+
+    <div class="plans-grid">
+      <!-- GOOGLE ESENCIAL -->
+      <div class="plan-card g reveal">
+        <div class="plan-hd">
+          <div class="plan-nm">GOOGLE ADS<br>ESENCIAL</div>
+          <div class="plan-pr"><span class="a">$4,000</span><span class="p">/mes</span></div>
+          <div class="plan-su">Setup: <strong>$2,500</strong> (pago único)</div>
+        </div>
+        <div class="plan-bd">
+          <ul>
+            <li>Manejo profesional mensual</li>
+            <li>5 grupos de keywords</li>
+            <li>3 versiones de anuncios</li>
+            <li>Conversiones configuradas</li>
+            <li>Reporte quincenal</li>
+          </ul>
+          <div class="plan-break">Manejo: $2,000 + Pauta mínima: $2,000<br>(puedes invertir más en pauta si gustas)</div>
+        </div>
+      </div>
+
+      <!-- GOOGLE BUSINESS -->
+      <div class="plan-card g reveal">
+        <div class="plan-hd">
+          <div class="plan-nm">GOOGLE ADS<br>BUSINESS</div>
+          <div class="plan-pr"><span class="a">$6,000</span><span class="p">/mes</span></div>
+          <div class="plan-su">Setup: <strong>$2,500</strong> (pago único)</div>
+        </div>
+        <div class="plan-bd">
+          <ul>
+            <li>Manejo profesional mensual</li>
+            <li>8 grupos de keywords</li>
+            <li>5 versiones de anuncios</li>
+            <li>Extensiones completas (sitelinks, llamadas, ubicación, callouts)</li>
+            <li>Reporte quincenal + análisis</li>
+          </ul>
+          <div class="plan-break">Manejo: $2,500 + Pauta mínima: $3,500<br>(puedes invertir más en pauta si gustas)</div>
+        </div>
+      </div>
+
+      <!-- META ESENCIAL -->
+      <div class="plan-card m reveal">
+        <div class="plan-hd">
+          <div class="plan-nm">META ADS<br>ESENCIAL</div>
+          <div class="plan-pr"><span class="a">$4,500</span><span class="p">/mes</span></div>
+          <div class="plan-su">Setup: <strong>$2,000</strong> si no tienen redes (pago único)</div>
+        </div>
+        <div class="plan-bd">
+          <ul>
+            <li>1 video mensual (Reels/Stories)</li>
+            <li>2 imágenes estáticas creativas</li>
+            <li>Setup Business Manager + Pixel</li>
+            <li>Creación páginas FB + IG si no existen</li>
+            <li>Reporte quincenal incluido</li>
+          </ul>
+          <div class="plan-break">Todo incluido: manejo + pauta + creatividades</div>
+        </div>
+      </div>
+
+      <!-- META BUSINESS -->
+      <div class="plan-card m hot reveal">
+        <div class="plan-hd">
+          <div class="plan-nm">META ADS<br>BUSINESS</div>
+          <div class="plan-pr"><span class="a">$7,500</span><span class="p">/mes</span></div>
+          <div class="plan-su">Setup: <strong>$2,000</strong> si no tienen redes (pago único)</div>
+        </div>
+        <div class="plan-bd">
+          <ul>
+            <li>2 videos mensuales</li>
+            <li>4 imágenes estáticas</li>
+            <li>Remarketing (sigue a visitantes web)</li>
+            <li>A/B testing de creatividades</li>
+            <li>Reporte quincenal + análisis estratégico</li>
+          </ul>
+          <div class="plan-break">Todo incluido: manejo + pauta + creatividades</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PAQUETES COMBINADOS ========== -->
+<div class="sec">
+  <div class="ctn">
+    <div class="sec-head reveal">
+      <h2 class="sec-t">PAQUETES QUE POTENCIAN TU INVERSIÓN: WEB + GOOGLE ADS + META (FACEBOOK E INSTAGRAM)</h2>
+      <p class="sec-s">Servicios integrados que se multiplican. Ahorra y obtén mejores resultados.</p>
+    </div>
+    <div class="combos">
+      <!-- COMBO 1: PRESENCIA DIGITAL (RECOMENDADO) -->
+      <div class="combo hot reveal">
+        <div class="combo-badge">⭐ RECOMENDADO</div>
+        <div class="combo-hd">
+          <div class="combo-nm">PRESENCIA DIGITAL</div>
+          <div class="combo-tg">Web + Google Ads Esencial + Meta Esencial</div>
+          <div class="combo-pr"><span class="a">$8,000</span><span class="p">/ mes</span></div>
+          <div class="combo-su">Setup total: <strong>$8,500</strong> <span class="save">Ahorras $1,300</span></div>
+        </div>
+        <div class="combo-bd">
+          <div class="combo-lbl">QUÉ INCLUYE</div>
+          <ul class="fl">
+            <li>Web profesional SEO completa (1 año)</li>
+            <li>Google Ads Esencial: manejo + pauta + keywords</li>
+            <li>Meta Esencial: 1 video + 2 imágenes/mes</li>
+            <li>Reportes quincenales con KPIs reales</li>
+            <li>Optimización continua de campañas</li>
+            <li>Setup Business Manager + Pixel</li>
+          </ul>
+          <div class="combo-lbl">IDEAL PARA</div>
+          <p style="font-size:14px;color:var(--gr)">Negocios que quieren aparecer en Google y redes sociales desde el primer día, con presupuesto controlado y resultados medibles.</p>
+        </div>
+      </div>
+
+      <!-- COMBO 2: IMPULSO TOTAL -->
+      <div class="combo reveal">
+        <div class="combo-hd">
+          <div class="combo-nm">IMPULSO TOTAL</div>
+          <div class="combo-tg">Web + REPLai Pilot + Google Business + Meta Business</div>
+          <div class="combo-pr"><span class="a">$14,950</span><span class="p">/ mes</span></div>
+          <div class="combo-su">Setup total: <strong>$11,000</strong> <span class="save">Ahorras $1,790</span></div>
+        </div>
+        <div class="combo-bd">
+          <div class="combo-lbl">QUÉ INCLUYE</div>
+          <ul class="fl">
+            <li><strong>TODO lo del Combo Presencia Digital, más:</strong></li>
+            <li>REPLai Pilot: IA WhatsApp 24/7 + Dashboard</li>
+            <li>ChatBot REPLai Pilot integrado en la web</li>
+            <li>Google Business: más keywords + extensiones completas</li>
+            <li>Meta Business: 2 videos + 4 imágenes + remarketing</li>
+            <li>A/B testing de creatividades</li>
+            <li>Reportes quincenales con análisis estratégico</li>
+          </ul>
+          <div class="combo-lbl">IDEAL PARA</div>
+          <p style="font-size:14px;color:var(--gr)">Negocios que quieren dominar su mercado: web + IA + Google + redes. Máxima presencia y automatización.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- VERIFICACIÓN DE CUENTAS -->
+    <div class="note reveal" style="margin-top:24px">
+      <strong>¿De dónde salen los números?</strong><br>
+      <strong>Presencia Digital:</strong> Setup: Web $5,300 + Google $2,500 + Meta $2,000 = $9,800 → combo <strong>$8,500</strong>. Mensual: Google Esencial $4,000 + Meta Esencial $4,500 = $8,500 → combo <strong>$8,000/mes</strong>.<br>
+      <strong>Impulso Total:</strong> Setup: Web $5,300 + REPLai $2,990 + Google $2,500 + Meta $2,000 = $12,790 → combo <strong>$11,000</strong>. Mensual: Google Business $6,000 + Meta Business $7,500 + REPLai ~$1,500 + ChatBot $950 = $15,950 → combo <strong>$14,950/mes</strong>.
+    </div>
+  </div>
+</div>
+
+<!-- ========== TABLA COMPARATIVA ========== -->
+<div class="sec">
+  <div class="ctn">
+    <div class="sec-head reveal">
+      <h2 class="sec-t">COMPARATIVA COMPLETA</h2>
+    </div>
+    <table class="tbl reveal">
+      <thead><tr><th>SERVICIO</th><th>INDIVIDUAL</th><th>PRESENCIA DIGITAL ⭐</th><th>IMPULSO TOTAL</th></tr></thead>
+      <tbody>
+        <tr><td>Web profesional SEO</td><td class="chk">$5,300</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+        <tr><td>Google Ads Esencial</td><td class="chk">$4,000/mes</td><td class="chk">✓</td><td class="crs">—</td></tr>
+        <tr><td>Google Ads Business</td><td class="chk">$6,000/mes</td><td class="crs">—</td><td class="chk">✓</td></tr>
+        <tr><td>Meta Esencial (1 video + 2 imgs)</td><td class="chk">$4,500/mes</td><td class="chk">✓</td><td class="crs">—</td></tr>
+        <tr><td>Meta Business (2 videos + 4 imgs + remarketing)</td><td class="chk">$7,500/mes</td><td class="crs">—</td><td class="chk">✓</td></tr>
+        <tr><td>REPLai Pilot (WhatsApp IA 24/7)</td><td class="chk">$2,990 + mensual</td><td class="crs">—</td><td class="chk">✓</td></tr>
+        <tr><td>ChatBot web integrado</td><td class="chk">$950/mes</td><td class="crs">—</td><td class="chk">✓</td></tr>
+        <tr><td>Reportes quincenales</td><td class="chk">✓</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+        <tr><td>Optimización continua</td><td class="chk">✓</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+        <tr style="border-top:2px solid var(--b)"><td><strong>SETUP TOTAL</strong></td><td>Variable</td><td><strong class="em">$8,500</strong></td><td><strong class="em">$11,000</strong></td></tr>
+        <tr><td><strong>MENSUALIDAD TOTAL</strong></td><td>Variable</td><td><strong class="em">$8,000/mes</strong></td><td><strong class="em">$14,950/mes</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ========== SETUP ========== -->
+<div class="sec">
+  <div class="ctn">
+    <div class="sec-head reveal">
+      <h2 class="sec-t">EL SETUP: LOS CIMIENTOS DE TU PRESENCIA DIGITAL</h2>
+      <p class="sec-s">Sin un setup profesional, las campañas se desperdician. Es como construir una casa sin cimientos.</p>
+    </div>
+    <div class="setup-box reveal">
+      <h3>¿QUÉ ES EL SETUP EXACTAMENTE?</h3>
+      <p>El Setup es el trabajo técnico de implementación que hacemos <strong style="color:var(--gb)">una sola vez</strong> para dejar TODO funcionando. Incluye crear y configurar cuentas, conectar plataformas, diseñar la web, estructurar campañas y verificar que cada peso se trackee correctamente.</p>
+      <p>Un buen setup permite el <strong style="color:var(--gb)">crecimiento orgánico</strong>: cuando todo está bien configurado, tu negocio gana autoridad en Google de forma natural y sostenida. La diferencia entre gastar en publicidad para siempre, o construir una base que genera clientes mes a mes.</p>
+      <div class="setup-steps">
+        <div class="setup-step"><div class="n">1</div><div><h4>PLATAFORMAS</h4><p>Google Ads, Analytics, Search Console, Business Profile, Meta Business Manager: todo creado, vinculado y verificado.</p></div></div>
+        <div class="setup-step"><div class="n">2</div><div><h4>WEB PROFESIONAL</h4><p>Diseño, SEO, hosting, dominio, emails, formularios. Tu negocio con presencia real.</p></div></div>
+        <div class="setup-step"><div class="n">3</div><div><h4>ESTRUCTURA DE CAMPAÑAS</h4><p>Research de keywords, redacción de anuncios, configuración de conversiones y extensiones.</p></div></div>
+        <div class="setup-step"><div class="n">4</div><div><h4>CONEXIÓN DE IA</h4><p>REPLai Pilot conectado a WhatsApp y web. Dashboard operativo con datos reales.</p></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== VS COMPETENCIA (UNA COLUMNA, NO DOS) ========== -->
+<div class="sec">
+  <div class="ctn">
+    <div class="sec-head reveal">
+      <h2 class="sec-t">POR QUÉ SOMOS DIFERENTES</h2>
+      <p class="sec-s">Analizamos lo que ofrecen otras agencias. Esto es lo que encontramos — y lo que nosotros hacemos distinto.</p>
+    </div>
+    <div class="vs-grid">
+      <div class="vs-block vs-them reveal">
+        <h3><span class="ico">📉</span> OTRAS AGENCIAS</h3>
+        <ul>
+          <li>Reportes con screenshots de dashboards, sin interpretación ni análisis</li>
+          <li><strong>Sin IA ni automatización</strong> — un humano responde WhatsApp en horario laboral</li>
+          <li>Web y publicidad como servicios separados, sin integración</li>
+          <li>Segmentación geográfica deficiente: 20%+ de clicks de ciudades sin cobertura<sup>*</sup></li>
+          <li>Campañas configuradas que generan 0 impresiones<sup>*</sup></li>
+          <li>Solo 5 keywords activas — cobertura mínima<sup>*</sup></li>
+          <li>Sin precios públicos ni transparencia</li>
+          <li>10 años haciendo lo mismo, sin evolucionar</li>
+        </ul>
+      </div>
+      <div class="vs-block vs-us reveal">
+        <h3><span class="ico">🚀</span> GLENNGO</h3>
+        <ul>
+          <li><strong>Reportes cada 15 días</strong> con análisis estratégico y siguientes pasos</li>
+          <li>KPIs claros: leads, costo por lead, ROI — no solo clicks e impresiones</li>
+          <li><strong>REPLai Pilot</strong>: IA que responde WhatsApp 24/7 sin perder un cliente</li>
+          <li>Todo integrado: web + ads + IA funcionan como un solo sistema</li>
+          <li>Segmentación geográfica precisa: solo personas de tu ciudad</li>
+          <li>20+ keywords activas con monitoreo continuo</li>
+          <li><strong>Precios transparentes</strong> desde el primer contacto</li>
+          <li>Tecnología 2026: IA, automatización y datos en tiempo real</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note reveal">
+      <sup>*</sup> <strong>Datos reales encontrados</strong> en un reporte de Google Ads para fumigación en Toluca: 21.3% de clicks del Remarketing provenían de Puebla, Mérida y Cancún — ciudades sin cobertura del negocio. La campaña Performance Max tuvo 0 impresiones en toda la semana. Solo 5 keywords activas. Un setup profesional habría evitado este desperdicio.
+    </div>
+  </div>
+</div>
+
+<!-- ========== REPORTES ========== -->
+<div class="sec">
+  <div class="ctn">
+    <div class="sec-head reveal">
+      <h2 class="sec-t">INFORMES QUINCENALES · TRANSPARENCIA REAL</h2>
+      <p class="sec-s">Cada 15 días recibes un reporte profesional. No te decimos que todo va bien — te lo demostramos con datos.</p>
+    </div>
+    <div class="rep-grid">
+      <div class="rep-item reveal"><div class="ic">📊</div><h4>DATOS REALES</h4><p>Leads generados, costo por lead, clics, conversiones por dispositivo y zona geográfica</p></div>
+      <div class="rep-item reveal"><div class="ic">🎯</div><h4>ANÁLISIS ESTRATÉGICO</h4><p>Qué funcionó, qué no, y por qué. Ajustes recomendados para los próximos 15 días</p></div>
+      <div class="rep-item reveal"><div class="ic">📋</div><h4>FORMATO PROFESIONAL</h4><p>PDF ejecutivo con gráficas claras y lenguaje que cualquier persona entiende</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== ETAPAS ========== -->
+<div class="sec">
+  <div class="ctn">
+    <div class="sec-head reveal">
+      <h2 class="sec-t">CÓMO SE IMPLEMENTA</h2>
+      <p class="sec-s">Trabajamos por etapas. Cada una depende de los accesos y respuestas del cliente.</p>
+    </div>
+    <div class="tl">
+      <div class="tl-i active reveal"><div class="tl-n">1</div><div class="tl-c"><h4>DIAGNÓSTICO Y SETUP</h4><p>Creación de cuentas, configuración de plataformas, research de keywords y diseño web. Reunión inicial de 30 minutos para entender tu negocio.</p><span class="t">ETAPA INICIAL</span></div></div>
+      <div class="tl-i reveal"><div class="tl-n">2</div><div class="tl-c"><h4>LANZAMIENTO DE CAMPAÑAS</h4><p>Google Ads activo con keywords, pujas y extensiones. Meta Ads con primeras creatividades. Verificación de conversiones funcionando.</p><span class="t">ETAPA DE ACTIVACIÓN</span></div></div>
+      <div class="tl-i reveal"><div class="tl-n">3</div><div class="tl-c"><h4>OPTIMIZACIÓN E IA</h4><p>REPLai Pilot operativo en WhatsApp. Ajuste de pujas, pausa de keywords que no convierten. Primeras creatividades de Meta publicadas.</p><span class="t">ETAPA DE OPTIMIZACIÓN</span></div></div>
+      <div class="tl-i reveal"><div class="tl-n">4</div><div class="tl-c"><h4>PRIMER REPORTE Y AJUSTES</h4><p>Entrega del primer reporte quincenal con datos reales. Análisis de costo por lead, mejores keywords, ajustes y siguientes pasos estratégicos.</p><span class="t">ETAPA DE MEDICIÓN</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== QUÉ NECESITAMOS ========== -->
+<div class="sec">
+  <div class="ctn">
+    <div class="sec-head reveal">
+      <h2 class="sec-t">LO QUE NECESITAMOS DE TI</h2>
+      <p class="sec-s">Para activar todo, requerimos estos elementos. Te guiamos paso a paso.</p>
+    </div>
+    <div class="need-grid">
+      <div class="need-card reveal"><div class="ic">📍</div><div><h3>DIRECCIÓN + TELÉFONO</h3><p>Para Google Business Profile (Maps). La dirección debe ser verificable. Google envía postal (5-14 días) o verifica por video.</p></div></div>
+      <div class="need-card reveal"><div class="ic">🔐</div><div><h3>ACCESO A CUENTAS GOOGLE</h3><p>Crear o darnos acceso a Google Ads, Analytics y Search Console. Te enviamos instrucciones simples.</p></div></div>
+      <div class="need-card reveal"><div class="ic">📸</div><div><h3>FOTOS DEL NEGOCIO</h3><p>Mínimo 10 fotos: local, vehículos, equipo, uniformes, certificaciones, trabajos realizados.</p></div></div>
+      <div class="need-card reveal"><div class="ic">💬</div><div><h3>WHATSAPP BUSINESS</h3><p>Para activar REPLai Pilot necesitamos acceso al WhatsApp Business del negocio. Te ayudamos a configurarlo.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== ESTIMACIONES ========== -->
+<div class="sec">
+  <div class="ctn">
+    <div class="sec-head reveal">
+      <h2 class="sec-t">QUÉ ESPERAR · ESTIMACIONES HONESTAS</h2>
+      <p class="sec-s">Basado en CPC promedio de $4-8 MXN para servicios locales en ciudades medianas mexicanas.</p>
+    </div>
+    <div class="kpi-g">
+      <div class="kpi-c reveal"><div class="nm">15-40</div><div class="lb">LEADS/MES SEGÚN PLAN</div></div>
+      <div class="kpi-c reveal"><div class="nm">&lt;$150</div><div class="lb">COSTO POR LEAD</div></div>
+      <div class="kpi-c reveal"><div class="nm">24/7</div><div class="lb">ATENCIÓN CON IA</div></div>
+      <div class="kpi-c reveal"><div class="nm">15 días</div><div class="lb">ENTRE REPORTES</div></div>
+    </div>
+    <div class="note reveal">
+      <strong>HONESTIDAD PRIMERO:</strong> Estas son estimaciones basadas en promedios de la industria. Los resultados reales dependen de la competencia en tu ciudad, la calidad del servicio, la velocidad de respuesta y la tasa de cierre. No prometemos posición #1 en Google — nadie puede garantizar eso honestamente. Lo que sí garantizamos: trabajo profesional, reportes transparentes y optimización constante basada en datos reales.
+    </div>
+  </div>
+</div>
+
+<!-- ========== CTA ========== -->
+<div class="cta">
+  <div class="ctn" style="position:relative;z-index:2">
+    <h2 class="sec-t" style="font-size:30px">¿HABLAMOS?</h2>
+    <p class="sec-s" style="margin-top:8px">Activación al recibir accesos y pago de setup.</p>
+    <a href="https://wa.me/522295234432" class="cta-btn">ACEPTAR PROPUESTA E INICIAR</a>
+    <p style="margin-top:24px;font-size:14px;color:var(--gr)">REPLai Pilot · Inteligencia Artificial para Negocios · <strong style="color:var(--c)">Glenn Gómez</strong></p>
+  </div>
+</div>
+
+<!-- ========== FOOTER ========== -->
+<div class="ft">
+  <div class="ctn">
+    <div class="gn">REPLAI PILOT</div>
+    <p>Propuesta válida 30 días · Precios en MXN · IVA no incluido</p>
+    <p>WhatsApp: +52 229 523 4432</p>
+  </div>
+</div>
+
+<!-- ========== SCROLL REVEAL ========== -->
+<script>
+(function(){
+  const io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+})();
+</script>
+
+</body>
+</html>
