@@ -71,9 +71,9 @@
   /* ══ HERO ══ */
   .hero{min-height:92vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}
   .hero-bglow{position:absolute;inset:0;background:radial-gradient(60rem 34rem at 50% -10%,rgba(10,147,150,.13),transparent 70%);pointer-events:none}
-  .orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.16;pointer-events:none;animation:orbFloat 18s ease-in-out infinite}
-  .orb.a{width:420px;height:420px;background:var(--acento);top:8%;left:-140px}
-  .orb.b{width:380px;height:380px;background:var(--verde);bottom:4%;right:-120px;animation-delay:-9s}
+  .orb{position:absolute;width:520px;height:520px;border-radius:50%;pointer-events:none;animation:orbFloat 18s ease-in-out infinite}
+  .orb.a{background:radial-gradient(circle,rgba(10,147,150,.2) 0%,transparent 62%);top:-40px;left:-160px}
+  .orb.b{background:radial-gradient(circle,rgba(224,94,94,.14) 0%,transparent 62%);bottom:-60px;right:-140px;animation-delay:-9s}
   .hero-particulas{position:absolute;inset:0;pointer-events:none;overflow:hidden}
   .hero-particulas i{position:absolute;bottom:-8px;width:3px;height:3px;border-radius:50%;background:var(--acento);box-shadow:0 0 6px var(--acento);animation:rise linear infinite}
   .hero-linea{position:absolute;left:0;right:0;bottom:34px;width:100%;opacity:.5;pointer-events:none}
@@ -99,7 +99,7 @@
 
   /* ══ SECCIONES ══ */
   .sec{padding:70px 0;border-bottom:1px solid var(--borde)}
-  .sec-t{font-size:29px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px;text-transform:uppercase}
+  .sec-t{font-size:29px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px;text-transform:uppercase;color:var(--acento)}
   .sec-s{font-size:16px;color:var(--tenue)}
   .sec-head{margin-bottom:44px}
   .sec-head .sec-s{margin-bottom:8px}
@@ -130,10 +130,11 @@
   .svc{background:var(--panel);border:1px solid var(--borde);border-radius:18px;margin-bottom:24px;overflow:hidden;transition:border-color .3s;position:relative}
   .svc:hover{border-color:rgba(10,147,150,.35)}
   .svc.star{border-color:rgba(10,147,150,.55);box-shadow:0 0 34px rgba(10,147,150,.12)}
+  .svc.star .svc-price{padding-top:46px}
   .svc-badge{position:absolute;top:0;right:0;background:var(--acento);color:var(--fondo);font-size:10.5px;font-weight:800;padding:6px 16px;border-radius:0 0 0 12px;text-transform:uppercase;letter-spacing:1px;z-index:3;box-shadow:0 0 14px rgba(10,147,150,.5)}
   .svc-inner{display:grid;grid-template-columns:1fr 250px;gap:0}
   .svc-info{padding:28px}
-  .svc-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:#3fc6c9;margin-bottom:10px;padding:4px 12px;background:rgba(10,147,150,.08);border-radius:100px}
+  .svc-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--rojo);margin-bottom:10px;padding:4px 12px;background:rgba(224,94,94,.08);border-radius:100px}
   .svc-tag .ico-svg{width:13px;height:13px;flex-shrink:0}
   .svc-info h3{font-size:21px;font-weight:800;margin-bottom:8px;text-transform:uppercase;letter-spacing:-.01em}
   .svc-info h3 a{color:inherit;text-decoration:none;border-bottom:2px solid var(--acento)}
@@ -259,6 +260,29 @@
   .tl-c p{font-size:14px;color:var(--tenue)}
   .tl-c .t{display:inline-block;font-family:var(--mono);font-size:9.5px;color:#3fc6c9;font-weight:700;text-transform:uppercase;letter-spacing:.16em;margin-top:6px;padding:3px 10px;background:rgba(10,147,150,.08);border:1px solid rgba(10,147,150,.25);border-radius:100px}
 
+  /* ══ FAQ ══ */
+  .faq{border:1px solid var(--borde);border-radius:12px;background:var(--panel);margin-bottom:12px;padding:0 18px}
+  .faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 0;font-weight:700;font-size:14.5px}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary:hover{color:#3fc6c9}
+  .faq .flecha{color:var(--acento);font-weight:800;transition:transform .2s;flex-shrink:0;font-size:16px}
+  .faq[open] .flecha{transform:rotate(90deg)}
+  .faq .r{padding:0 0 16px;font-size:13.5px;color:var(--tenue);line-height:1.7}
+  .faq .r strong{color:var(--texto)}
+
+  /* ══ GARANTÍA ══ */
+  .gar-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:26px}
+  .gar-item{text-align:center;padding:24px 18px}
+  .gar-item .ic{font-size:26px;margin-bottom:10px}
+  .gar-item h4{font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px;color:#3fc6c9}
+  .gar-item p{font-size:13px;color:var(--tenue)}
+
+  /* ══ QR EN CTA ══ */
+  .cta-qr{display:flex;align-items:center;justify-content:center;gap:44px;margin-top:8px;flex-wrap:wrap}
+  .qr-card{background:#ffffff;padding:14px 14px 10px;border-radius:16px;display:flex;flex-direction:column;gap:8px;align-items:center;box-shadow:0 10px 34px rgba(0,0,0,.45)}
+  .qr-card img{display:block;width:150px;height:150px}
+  .qr-card .micro{color:#555}
+
   /* ══ CTA ══ */
   .cta{text-align:center;padding:84px 0;background:radial-gradient(50rem 26rem at 50% 100%,rgba(10,147,150,.1),transparent 70%);position:relative;overflow:hidden}
   .cta::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 50% 60%,rgba(10,147,150,.05) 0%,transparent 55%);pointer-events:none}
@@ -274,7 +298,7 @@
   .ft p{font-size:13px;color:var(--tenue);margin-bottom:4px}
 
   /* ══ BOTÓN FLOTANTE WHATSAPP ══ */
-  .wa-float{position:fixed;right:18px;bottom:18px;z-index:90;width:54px;height:54px;border-radius:50%;background:var(--acento);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(10,147,150,.45);transition:transform .2s,filter .2s}
+  .wa-float{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:95;width:54px;height:54px;border-radius:50%;background:var(--acento);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(10,147,150,.45);transition:transform .2s,filter .2s;transform:translateZ(0);will-change:transform}
   .wa-float:hover{transform:scale(1.08);filter:brightness(1.15)}
   .wa-float svg{width:26px;height:26px;fill:var(--fondo)}
   .wa-float::after{content:"";position:absolute;inset:0;border-radius:50%;animation:waPulse 2.4s ease-out infinite}
@@ -299,7 +323,10 @@
     .imp-why{grid-template-columns:1fr}
     .imp-tag{width:62px;font-size:8.5px}
     .imp-bar{height:20px;font-size:9.5px}
-    .orb{filter:blur(60px)}
+    .orb{width:360px;height:360px}
+    .svc.star .svc-info{padding-top:48px}
+    .svc.star .svc-price{padding-top:28px}
+    .qr-card{display:none}
   }
   @media (prefers-reduced-motion: reduce){
     .orb,.hero-particulas i,.hero-linea path,.cta-btn::after{animation:none!important}
@@ -798,14 +825,72 @@
   </div>
 </div>
 
+<!-- ========== FAQ ========== -->
+<div class="sec" id="faq">
+  <div class="ctn">
+    <div class="sec-head reveal">
+      <p class="micro">Antes de que lo preguntes</p>
+      <h2 class="sec-t">PREGUNTAS FRECUENTES</h2>
+      <p class="sec-s">Lo que todos los clientes preguntan antes de empezar. Sin letra chica.</p>
+    </div>
+    <details class="faq reveal">
+      <summary>¿Qué es el setup y por qué se paga aparte?<span class="flecha">›</span></summary>
+      <div class="r">Es el trabajo técnico que se hace <strong>una sola vez</strong>: crear y vincular tus cuentas (Google, Meta, Analytics), estructurar campañas, diseñar la web y dejar todo midiendo. Sin setup, cada peso de publicidad se desperdicia. Los manejos mensuales ya vienen con todo configurado desde el día uno.</div>
+    </details>
+    <details class="faq reveal">
+      <summary>¿Cuánto tarda en estar todo funcionando?<span class="flecha">›</span></summary>
+      <div class="r">Semana 1: diagnóstico y setup. Semana 2: tu web publicada, la IA respondiendo y todo midiéndose. Semana 3: campañas activas. Y a partir de ahí, <strong>reporte cada 15 días</strong> con datos reales.</div>
+    </details>
+    <details class="faq reveal">
+      <summary>¿Qué necesito de mi parte?<span class="flecha">›</span></summary>
+      <div class="r">Cuatro cosas: dirección verificable del negocio (para Google Maps), acceso a tus cuentas de Google, mínimo 10 fotos del negocio y tu WhatsApp Business. <strong>Te guiamos paso a paso en todo.</strong></div>
+    </details>
+    <details class="faq reveal">
+      <summary>¿La mensualidad incluye la publicidad?<span class="flecha">›</span></summary>
+      <div class="r">Sí. En Google Ads, el pago mensual incluye manejo profesional + pauta mínima (puedes invertir más si gustas). En Meta Ads, <strong>todo incluido</strong>: manejo + pauta + creatividades. Todo detallado en cada plan.</div>
+    </details>
+    <details class="faq reveal">
+      <summary>¿Puedo empezar solo con un servicio?<span class="flecha">›</span></summary>
+      <div class="r">Claro. Cada servicio funciona por sí solo: puedes empezar solo con la web, solo con ads o solo con REPLai Pilot. Los paquetes existen porque <strong>juntos funcionan mejor y cuestan menos</strong>.</div>
+    </details>
+    <details class="faq reveal">
+      <summary>¿Cuándo voy a ver resultados?<span class="flecha">›</span></summary>
+      <div class="r">Con honestidad: las campañas se activan en la semana 3 y el primer reporte con datos reales llega a los 15 días. No prometemos posición #1 en Google — nadie puede garantizar eso honestamente. Lo que sí garantizamos: <strong>todo se mide, se reporta y se optimiza con datos de tu negocio.</strong></div>
+    </details>
+  </div>
+</div>
+
+<!-- ========== GARANTÍA GLENNGO ========== -->
+<div class="sec" id="garantia">
+  <div class="ctn">
+    <div class="carta reveal" style="padding:36px 30px">
+      <p class="micro" style="text-align:center">Nuestra palabra, por escrito</p>
+      <h2 class="sec-t" style="font-size:24px;text-align:center;margin-bottom:0">GARANTÍA GLENNGO</h2>
+      <div class="gar-grid">
+        <div class="carta gar-item"><div class="ic">📊</div><h4>Reportes cada 15 días</h4><p>Ves exactamente qué se hizo, qué funcionó y qué sigue. Nunca te quedas a ciegas.</p></div>
+        <div class="carta gar-item"><div class="ic">💰</div><h4>Precios transparentes</h4><p>Todo está publicado en esta página. Lo que ves es lo que pagas: sin sorpresas ni letra chica.</p></div>
+        <div class="carta gar-item"><div class="ic">🎯</div><h4>Todo se mide</h4><p>Cada peso invertido queda registrado en Analytics y aparece en tus reportes. Nada de fe.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ========== CTA ========== -->
 <div class="cta" id="contacto">
   <div class="ctn" style="position:relative;z-index:2">
     <p class="micro">El siguiente paso es tuyo</p>
     <h2 class="sec-t" style="font-size:31px">TU COMPETENCIA YA ESTÁ INVIRTIENDO</h2>
     <p class="sec-s" style="margin-top:8px">Cuéntame qué necesita tu negocio y te cotizo a la medida por WhatsApp. Sin compromiso, sin tecnicismos.</p>
-    <a href="https://wa.me/522295234432" class="cta-btn">QUIERO MÁS CLIENTES — HABLEMOS YA</a>
-    <p style="margin-top:24px;font-size:14px;color:var(--tenue)">REPLai Pilot · Inteligencia Artificial para Negocios</p>
+    <div class="cta-qr">
+      <div class="cta-qr-main">
+        <a href="https://wa.me/522295234432" class="cta-btn">QUIERO MÁS CLIENTES — HABLEMOS YA</a>
+        <p style="margin-top:24px;font-size:14px;color:var(--tenue)">REPLai Pilot · Inteligencia Artificial para Negocios</p>
+      </div>
+      <div class="qr-card">
+        <img src="assets/qr-wa.png" alt="Código QR para abrir WhatsApp" width="150" height="150" loading="lazy">
+        <p class="micro" style="text-align:center">¿Estás en desktop?<br>Escanéame y sigue en tu WhatsApp</p>
+      </div>
+    </div>
   </div>
 </div>
 
