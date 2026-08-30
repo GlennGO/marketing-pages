@@ -138,6 +138,30 @@
   .fl li{padding:8px 0;font-size:14px;display:flex;align-items:flex-start;gap:10px;line-height:1.5}
   .fl li::before{content:"✓";color:var(--gb);font-weight:800;flex-shrink:0;margin-top:1px}
 
+  /* === AEO === */
+  .aeo-t{font-size:26px}
+  .aeo-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:8px}
+  .aeo-card .aeo-pr{display:flex;align-items:baseline;gap:6px;margin:10px 0}
+  .aeo-pr .a{font-size:26px;font-weight:900;color:var(--gb)}
+  .aeo-pr .p{font-size:12px;color:var(--gr)}
+  .aeo-note{margin-top:20px;text-align:center;font-size:13px;font-style:italic;color:var(--gr)}
+  .aeo-tool{margin-top:44px;padding:30px;background:var(--card);border:1px solid var(--b);border-radius:18px}
+  .aeo-tool h3{font-size:15px;font-weight:800;letter-spacing:1px;color:var(--o);margin-bottom:12px;text-transform:uppercase}
+  .shot-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px}
+  .shot{margin:0}
+  .shot img{display:block;width:100%;border-radius:12px;border:1px solid var(--b);transition:transform .35s ease,border-color .35s ease}
+  .shot:hover img{transform:scale(1.03);border-color:rgba(23,138,59,.35)}
+  .shot figcaption{margin-top:8px;font-size:12px;color:var(--gr);text-align:center;line-height:1.5}
+  .aeo-case{margin-top:44px;text-align:center}
+  .aeo-case-t{font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+  .aeo-counter{display:flex;align-items:center;justify-content:center;gap:28px;margin-top:26px}
+  .ac-num{font-size:56px;font-weight:900;color:var(--gb);line-height:1}
+  .ac-num.antes{color:var(--o)}
+  .ac-arrow{font-size:36px;font-weight:900;color:var(--gb)}
+  .ac-lbl{margin-top:8px;font-size:11px;letter-spacing:2px;color:var(--gr)}
+  .ico-svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .card .ic .ico-svg{width:30px;height:30px;color:var(--o)}
+
   /* === TABLE === */
   .tbl{width:100%;border-collapse:collapse;margin-top:20px;font-size:14px}
   .tbl th{text-align:left;padding:14px 16px;background:rgba(255,255,255,.03);font-weight:700;color:var(--gr);border-bottom:2px solid var(--b);font-size:11px;text-transform:uppercase;letter-spacing:1px}
@@ -231,10 +255,27 @@
     .svc-price{border-left:none;border-top:1px solid var(--b);flex-direction:row;align-items:center;gap:16px;flex-wrap:wrap}
     .svc-info ul{grid-template-columns:1fr}
     .vs-block{padding:24px 20px}
+    .aeo-grid{grid-template-columns:1fr}
+    .shot-grid{grid-template-columns:1fr}
+    .ac-num{font-size:42px}
+    .ac-arrow{font-size:28px}
   }
 </style>
 </head>
 <body>
+
+<!-- ========== SPRITE SVG (iconos minimalistas) ========== -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="i-bot" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="11" rx="2.5"/><circle cx="9.5" cy="13.5" r="1.2" style="fill:currentColor;stroke:none"/><circle cx="14.5" cy="13.5" r="1.2" style="fill:currentColor;stroke:none"/><path d="M12 8V5.5"/><circle cx="12" cy="4" r="1.2"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.7 2.7 4 5.9 4 9s-1.3 6.3-4 9c-2.7-2.7-4-5.9-4-9s1.3-6.3 4-9z"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V11"/><path d="M10 20V5"/><path d="M16 20v-6"/><path d="M2.5 20h19"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol>
+  <symbol id="i-tool" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
+  <symbol id="i-radar" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 17"/><path d="M17 6h6v6"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M23 18l-9.5-9.5-5 5L1 6"/><path d="M17 18h6v-6"/></symbol>
+</svg>
 
 <!-- ========== TOPBAR CON LOGO ========== -->
 <div class="topbar">
@@ -388,6 +429,60 @@
             <div class="setup-note">Si no tienen redes creadas</div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== AEO: LA NUEVA FRONTERA ========== -->
+<div class="sec" id="aeo">
+  <div class="ctn">
+    <div class="sec-head reveal">
+      <span class="svc-tag">NUEVO · PIONEROS EN MÉXICO</span>
+      <h2 class="sec-t aeo-t">LA NUEVA FRONTERA: QUE LA IA RECOMIENDE TU NEGOCIO</h2>
+      <p class="sec-s">Tus clientes ya no solo buscan en Google: <strong>le preguntan a la IA</strong>. "¿Dónde fumigan cerca de mí?", "¿cuál es la mejor tintorería de la ciudad?" — y ChatGPT, Gemini, Perplexity y el nuevo modo IA de Google responden con nombres concretos de negocios.</p>
+      <p class="sec-s">Si tu web no puede ser leída por esas IAs, <strong>no existes en esa conversación</strong>. Y casi ninguna web puede: están hechas para personas, no para robots de IA. Eso lo resuelve el <strong>AEO (Answer Engine Optimization)</strong> — y prácticamente ninguna agencia en México lo ofrece. Nosotros sí.</p>
+    </div>
+    <div class="aeo-grid">
+      <div class="card aeo-card reveal">
+        <div class="ic"><svg class="ico-svg"><use href="#i-search"/></svg></div>
+        <h3>AUDITORÍA AEO EXPRESS</h3>
+        <div class="aeo-pr"><span class="a">$700</span><span class="p">pago único</span></div>
+        <p>Descubre qué ve la IA cuando lee tu web. Informe completo de 8 ejes con nuestra herramienta propia, con doble pasada: lo que ve un robot de IA vs lo que ve una persona. Incluye veredicto claro y lista de fallas priorizadas.</p>
+      </div>
+      <div class="card aeo-card reveal">
+        <div class="ic"><svg class="ico-svg"><use href="#i-tool"/></svg></div>
+        <h3>IMPLEMENTACIÓN AEO</h3>
+        <div class="aeo-pr"><span class="a">$1,750</span><span class="p">pago único</span></div>
+        <p>Dejamos tu web legible y citable para ChatGPT, Gemini y Perplexity: archivo llms.txt, contenido estructurado para que la IA te cite, datos estructurados de tu negocio y re-auditoría final <strong>mostrándote el salto de puntos</strong> antes y después.</p>
+      </div>
+      <div class="card aeo-card reveal">
+        <div class="ic"><svg class="ico-svg"><use href="#i-radar"/></svg></div>
+        <h3>MONITOREO AEO</h3>
+        <div class="aeo-pr"><span class="a">$500</span><span class="p">/mes</span></div>
+        <p>Los modelos de IA cambian sus reglas cada mes. Reauditoría mensual + ajustes para que no te caigas de las respuestas de la IA. Pensado para negocios que ya invierten en su presencia digital.</p>
+      </div>
+    </div>
+    <p class="aeo-note reveal">AEO es un servicio OPCIONAL: súmalo a cualquier plan. La mayoría empieza con la auditoría de $700 y decide después.</p>
+
+    <div class="aeo-tool reveal">
+      <h3>NO VENDEMOS HUMO: MEDIMOS CON HERRAMIENTA PROPIA</h3>
+      <p class="sec-s">Desarrollamos nuestro propio <strong>Auditor AEO</strong>: analiza tu sitio con los mismos ojos de 21 robots de IA distintos, califica 8 ejes (acceso, lectura sin JavaScript, datos estructurados, citabilidad, entidad de marca…) y entrega un informe ejecutivo. Nadie más en el mercado local puede mostrar esto.</p>
+      <div class="shot-grid">
+        <figure class="shot reveal"><img src="assets/captura-auditor-1-nota44.png" alt="Auditor AEO: web normal con nota 44 de 100" loading="lazy"><figcaption>Una web normal: 44/100 — el 100% de su contenido no existe para la IA</figcaption></figure>
+        <figure class="shot reveal"><img src="assets/captura-auditor-2-ejes.png" alt="Auditor AEO: diagnóstico por ejes" loading="lazy"><figcaption>Diagnóstico eje por eje, con veredicto</figcaption></figure>
+        <figure class="shot reveal"><img src="assets/captura-auditor-3-doble-pasada.png" alt="Auditor AEO: doble pasada IA vs persona" loading="lazy"><figcaption>Lo que ve la IA vs lo que ve la gente — tabla de doble pasada</figcaption></figure>
+        <figure class="shot reveal"><img src="assets/captura-auditor-4-nota100.png" alt="Auditor AEO: web corregida con nota 100" loading="lazy"><figcaption>La misma tecnología, web corregida: 100/100</figcaption></figure>
+      </div>
+    </div>
+
+    <div class="aeo-case reveal">
+      <h3 class="aeo-case-t">CASO REAL: LA PRIMERA WEB QUE AUDITAMOS FUE LA NUESTRA</h3>
+      <p class="sec-s">Cuando terminamos nuestro Auditor AEO, la prueba de fuego era obvia: auditar nuestra propia web de GlennGO. Salió <strong>52 puntos de 100</strong>. Hoy, tras implementar todo lo que vendemos, está en <strong>97-100</strong>. Esta tecnología es tan nueva que aún no hay agencias compitiendo en ella — quién llegue primero, domina las respuestas de la IA en su ciudad.</p>
+      <div class="aeo-counter">
+        <div class="ac-item"><div class="ac-num antes" data-count="52">52</div><div class="ac-lbl">ANTES</div></div>
+        <div class="ac-arrow">→</div>
+        <div class="ac-item"><div class="ac-num" data-count="97" data-suffix="-100">97-100</div><div class="ac-lbl">HOY</div></div>
       </div>
     </div>
   </div>
