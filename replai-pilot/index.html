@@ -17,11 +17,11 @@
   *{margin:0;padding:0;box-sizing:border-box}
   /* ══ Sistema "instrumento de precisión" — Auditor AEO / Laboratorio ══ */
   :root{
-    --fondo:#0a0a0a; --texto:#f2f2f2; --acento:#0a9396; --verde:#54b878; --ambar:#d9c154; --rojo:#e05e5e;
+    --fondo:#0a0a0a; --texto:#f2f2f2; --acento:#0a9396; --verde:#0a9396; --ambar:#e05e5e; --rojo:#e05e5e;
     --borde:rgba(242,242,242,.16); --tenue:rgba(242,242,242,.62); --panel:rgba(255,255,255,.04);
     --mono:ui-monospace,"SF Mono","Cascadia Code","JetBrains Mono",Menlo,Consolas,monospace;
   }
-  body{font-family:'Inter',sans-serif;background:var(--fondo);color:var(--texto);line-height:1.6;overflow-x:hidden}
+  body{font-family:'Inter','Inter',system-ui,sans-serif;background:var(--fondo);color:var(--texto);line-height:1.6;overflow-x:hidden}
   /* Atmósfera: glow radial + retícula fina fijas */
   body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-2;
     background:radial-gradient(52rem 30rem at 12% -6%,rgba(10,147,150,.09),transparent 68%),radial-gradient(40rem 26rem at 105% 110%,rgba(10,147,150,.05),transparent 70%)}
@@ -43,7 +43,7 @@
   /* ══ ANIMACIONES ══ */
   @keyframes pulse{0%,100%{opacity:.4}50%{opacity:.9}}
   @keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes promoPulse{0%,100%{box-shadow:0 0 0 0 rgba(217,193,84,0)}50%{box-shadow:0 0 22px 3px rgba(217,193,84,.25)}}
+  @keyframes promoPulse{0%,100%{box-shadow:0 0 0 0 rgba(224,94,94,0)}50%{box-shadow:0 0 22px 3px rgba(224,94,94,.25)}}
   @keyframes shimmer{0%,55%{left:-75%}80%,100%{left:135%}}
   @keyframes dibujar{from{stroke-dashoffset:640}}
   @keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,-30px) scale(1.15)}}
@@ -93,7 +93,7 @@
   .hero-stat .lbl{font-family:var(--mono);font-size:10px;color:var(--tenue);text-transform:uppercase;letter-spacing:.18em;margin-top:2px}
 
   /* ══ PROMO ══ */
-  .promo-badge{display:inline-flex;align-items:center;gap:8px;margin-top:24px;padding:9px 22px;background:rgba(217,193,84,.08);border:1px solid rgba(217,193,84,.45);border-radius:100px;color:var(--ambar);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;animation:fadeUp 1s ease .25s both,promoPulse 2.6s ease-in-out 1.4s infinite}
+  .promo-badge{display:inline-flex;align-items:center;gap:8px;margin-top:24px;padding:9px 22px;background:rgba(224,94,94,.08);border:1px solid rgba(224,94,94,.45);border-radius:100px;color:var(--ambar);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;animation:fadeUp 1s ease .25s both,promoPulse 2.6s ease-in-out 1.4s infinite}
   .promo-note{margin:-28px 0 8px;text-align:center;font-size:13px;font-style:italic;color:var(--ambar)}
   .combo-addon{margin-top:12px;font-family:var(--mono);font-size:11.5px;color:#3fc6c9;opacity:.9}
 
@@ -103,7 +103,7 @@
   .sec-s{font-size:16px;color:var(--tenue)}
   .sec-head{margin-bottom:44px}
   .sec-head .sec-s{margin-bottom:8px}
-  .note{background:rgba(217,193,84,.05);border:1px solid rgba(217,193,84,.22);border-radius:14px;padding:22px;margin-top:28px;font-size:13px;color:var(--tenue);line-height:1.7}
+  .note{background:rgba(224,94,94,.05);border:1px solid rgba(224,94,94,.22);border-radius:14px;padding:22px;margin-top:28px;font-size:13px;color:var(--tenue);line-height:1.7}
   .note strong{color:var(--ambar)}
   .nota-teal{background:rgba(10,147,150,.06);border-color:rgba(10,147,150,.3)}
   .nota-teal strong{color:#3fc6c9}
@@ -121,9 +121,9 @@
   .imp-bar{height:22px;border-radius:100px;width:0;transition:width 1.2s cubic-bezier(.16,1,.3,1);display:flex;align-items:center;justify-content:flex-end;padding:0 10px;font-family:var(--mono);font-size:10.5px;font-weight:700;white-space:nowrap;overflow:hidden}
   .reveal.in .imp-bar{width:var(--w)}
   .imp-bar.bad{background:linear-gradient(90deg,rgba(224,94,94,.25),rgba(224,94,94,.75));color:#ffd6d6}
-  .imp-bar.good{background:linear-gradient(90deg,rgba(84,184,120,.3),var(--verde));color:#eafff0;box-shadow:0 0 12px rgba(84,184,120,.25)}
+  .imp-bar.good{background:linear-gradient(90deg,rgba(10,147,150,.3),var(--verde));color:#eafff0;box-shadow:0 0 12px rgba(10,147,150,.25)}
   .imp-why{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:34px}
-  .imp-check{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.5;padding:14px 16px;background:rgba(84,184,120,.06);border:1px solid rgba(84,184,120,.28);border-radius:12px}
+  .imp-check{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.5;padding:14px 16px;background:rgba(10,147,150,.06);border:1px solid rgba(10,147,150,.28);border-radius:12px}
   .imp-check::before{content:"✓";color:var(--verde);font-weight:800;flex-shrink:0;margin-top:1px}
 
   /* ══ SERVICIOS ══ */
@@ -141,7 +141,7 @@
   .svc-info ul{list-style:none;font-size:13px;color:var(--tenue);display:grid;grid-template-columns:1fr 1fr;gap:4px 16px}
   .svc-info ul li{padding:4px 0;padding-left:22px;position:relative}
   .svc-info ul li::before{content:"✓";position:absolute;left:0;top:4px;color:var(--verde);font-weight:800}
-  .svc-optional{margin-top:12px;padding:12px 16px;background:rgba(217,193,84,.05);border:1px solid rgba(217,193,84,.2);border-radius:10px;font-size:13px;color:#d8d8cf;line-height:1.6}
+  .svc-optional{margin-top:12px;padding:12px 16px;background:rgba(224,94,94,.05);border:1px solid rgba(224,94,94,.2);border-radius:10px;font-size:13px;color:#d8d8cf;line-height:1.6}
   .svc-optional strong{color:var(--ambar)}
   .svc-btns{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap}
   .svc-btns .boton,.svc-btns .boton-o{padding:11px 20px;font-size:13.5px}
@@ -162,7 +162,7 @@
   .plans-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;margin-top:24px}
   .plan-card{background:var(--panel);border:1px solid var(--borde);border-radius:16px;overflow:hidden;transition:transform .3s;position:relative}
   .plan-card:hover{transform:translateY(-4px)}
-  .plan-card.hot{border-color:var(--ambar);box-shadow:0 0 30px rgba(217,193,84,.1)}
+  .plan-card.hot{border-color:var(--ambar);box-shadow:0 0 30px rgba(224,94,94,.1)}
   .plan-badge{position:absolute;top:0;right:0;background:var(--ambar);color:var(--fondo);font-size:9.5px;font-weight:800;padding:5px 12px;border-radius:0 0 0 10px;letter-spacing:1px;z-index:2}
   .plan-hd{padding:22px 20px;background:rgba(0,0,0,.3);border-bottom:1px solid var(--borde)}
   .plan-nm{font-size:14.5px;font-weight:800;text-transform:uppercase;letter-spacing:.02em;line-height:1.3}
@@ -192,7 +192,7 @@
   .combo-pr .p{font-size:15px;color:var(--tenue)}
   .combo-su{margin-top:10px;font-size:13px;color:var(--tenue)}
   .combo-su strong{color:var(--ambar)}
-  .save{display:inline-block;background:rgba(84,184,120,.14);color:var(--verde);font-size:12px;font-weight:700;padding:4px 12px;border-radius:100px;margin-left:6px}
+  .save{display:inline-block;background:rgba(10,147,150,.14);color:var(--verde);font-size:12px;font-weight:700;padding:4px 12px;border-radius:100px;margin-left:6px}
   .combo-bd{padding:26px 30px}
   .combo-lbl{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:#3fc6c9;margin:22px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--borde)}
   .combo-lbl:first-child{margin-top:0}
@@ -234,7 +234,7 @@
   .aeo-counter{display:flex;align-items:center;justify-content:center;gap:30px;margin-top:26px}
   .ac-num{font-family:var(--mono);font-size:54px;font-weight:800;line-height:1}
   .ac-num.antes{color:var(--rojo)}
-  .ac-num.hoy{color:var(--verde);text-shadow:0 0 24px rgba(84,184,120,.35)}
+  .ac-num.hoy{color:var(--verde);text-shadow:0 0 24px rgba(10,147,150,.35)}
   .ac-arrow{font-size:34px;font-weight:900;color:var(--verde)}
   .ac-lbl{font-family:var(--mono);margin-top:8px;font-size:9.5px;letter-spacing:.18em;color:var(--tenue);text-transform:uppercase}
   .ico-svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -261,15 +261,24 @@
 
   /* ══ CTA ══ */
   .cta{text-align:center;padding:84px 0;background:radial-gradient(50rem 26rem at 50% 100%,rgba(10,147,150,.1),transparent 70%);position:relative;overflow:hidden}
-  .cta::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 50% 60%,rgba(84,184,120,.05) 0%,transparent 55%);pointer-events:none}
+  .cta::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 50% 60%,rgba(10,147,150,.05) 0%,transparent 55%);pointer-events:none}
   .cta-btn{display:inline-block;padding:19px 46px;background:var(--acento);color:var(--fondo);font-weight:800;font-size:17.5px;border-radius:100px;text-decoration:none;margin-top:24px;letter-spacing:.02em;transition:transform .3s,box-shadow .3s,filter .2s;position:relative;z-index:2;overflow:hidden;box-shadow:0 0 30px rgba(10,147,150,.35)}
   .cta-btn:hover{transform:scale(1.05);box-shadow:0 8px 40px rgba(10,147,150,.55);filter:brightness(1.12)}
   .cta-btn::after{content:'';position:absolute;top:0;left:-75%;width:50%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.4),transparent);transform:skewX(-20deg);animation:shimmer 4s ease-in-out infinite}
 
   /* ══ FOOTER ══ */
   .ft{padding:44px 0;text-align:center;border-top:1px solid var(--borde)}
-  .ft .gn{font-weight:800;color:#3fc6c9;font-size:17px;margin-bottom:6px;text-transform:uppercase;letter-spacing:.12em}
+  .ft .gn{font-weight:800;font-size:17px;margin-bottom:6px;text-transform:uppercase;letter-spacing:.12em}
+  .ft .gn a{color:#3fc6c9;text-decoration:none;transition:filter .2s}
+  .ft .gn a:hover{filter:brightness(1.2)}
   .ft p{font-size:13px;color:var(--tenue);margin-bottom:4px}
+
+  /* ══ BOTÓN FLOTANTE WHATSAPP ══ */
+  .wa-float{position:fixed;right:18px;bottom:18px;z-index:90;width:54px;height:54px;border-radius:50%;background:var(--acento);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(10,147,150,.45);transition:transform .2s,filter .2s}
+  .wa-float:hover{transform:scale(1.08);filter:brightness(1.15)}
+  .wa-float svg{width:26px;height:26px;fill:var(--fondo)}
+  .wa-float::after{content:"";position:absolute;inset:0;border-radius:50%;animation:waPulse 2.4s ease-out infinite}
+  @keyframes waPulse{0%{box-shadow:0 0 0 0 rgba(10,147,150,.5)}70%{box-shadow:0 0 0 16px rgba(10,147,150,0)}100%{box-shadow:0 0 0 0 rgba(10,147,150,0)}}
 
   @media(max-width:768px){
     .hero h1{font-size:31px}
@@ -513,7 +522,7 @@
           <div class="per">/ mes · Todo incluido</div>
           <div class="setup-box">
             <div class="setup-lbl">SETUP PAGO ÚNICO</div>
-            <div class="setup-amt">$2,000</div>
+            <div class="setup-amt">$2,500</div>
             <div class="setup-note">Si no tienen redes creadas</div>
           </div>
         </div>
@@ -636,7 +645,7 @@
           <div class="plan-nm">META ADS<br>ESENCIAL</div>
           <div class="plan-pr"><span class="a">$4,500</span><span class="p">/mes</span></div>
           <div class="plan-mes">Manejo + pauta + creatividades</div>
-          <div class="plan-setup">Setup: <strong>$2,000</strong> si no tienen redes</div>
+          <div class="plan-setup">Setup: <strong>$2,500</strong> si no tienen redes</div>
         </div>
         <div class="plan-bd">
           <ul>
@@ -656,7 +665,7 @@
           <div class="plan-nm">META ADS<br>BUSINESS</div>
           <div class="plan-pr"><span class="a">$7,500</span><span class="p">/mes</span></div>
           <div class="plan-mes">Manejo + pauta + creatividades</div>
-          <div class="plan-setup">Setup: <strong>$2,000</strong> si no tienen redes</div>
+          <div class="plan-setup">Setup: <strong>$2,500</strong> si no tienen redes</div>
         </div>
         <div class="plan-bd">
           <ul>
@@ -690,7 +699,7 @@
           <div class="combo-nm">PRESENCIA DIGITAL</div>
           <div class="combo-tg">Web + Google Ads Esencial + Meta Esencial</div>
           <div class="combo-pr"><span class="a">$8,000</span><span class="p">/ mes</span></div>
-          <div class="combo-su">Setup total: <strong>$8,500</strong> <span class="save">Ahorras $1,300</span></div>
+          <div class="combo-su">Setup total: <strong>$8,500</strong> <span class="save">Ahorras $1,800</span></div>
         </div>
         <div class="combo-bd">
           <div class="combo-lbl">QUÉ INCLUYE</div>
@@ -715,7 +724,7 @@
           <div class="combo-nm">IMPULSO TOTAL</div>
           <div class="combo-tg">Web + REPLai Pilot + Google Business + Meta Business</div>
           <div class="combo-pr"><span class="a">$14,950</span><span class="p">/ mes</span></div>
-          <div class="combo-su">Setup total: <strong>$11,000</strong> <span class="save">Ahorras $1,790</span></div>
+          <div class="combo-su">Setup total: <strong>$11,000</strong> <span class="save">Ahorras $2,290</span></div>
         </div>
         <div class="combo-bd">
           <div class="combo-lbl">QUÉ INCLUYE</div>
@@ -736,7 +745,7 @@
       </div>
     </div>
 
-    <!-- TABLA COMPARATIVA (rediseñada) -->
+    <!-- TABLA COMPARATIVA (oculta a petición de Glenn — reactivar si se necesita)
     <div class="sec-head reveal" style="margin-top:56px">
       <p class="micro">Compara en 10 segundos</p>
       <h2 class="sec-t" style="font-size:23px">¿QUÉ LLEVA CADA PAQUETE?</h2>
@@ -761,11 +770,12 @@
       </tbody>
     </table>
     </div>
+    FIN TABLA OCULTA -->
 
     <div class="note reveal" style="margin-top:24px">
       <strong>¿DE DÓNDE SALEN LOS NÚMEROS?</strong><br>
-      <strong>Presencia Digital:</strong> Setup: Web $5,300 + Google $2,500 + Meta $2,000 = $9,800 → combo <strong>$8,500</strong>. Mensual: Google Esencial $4,000 + Meta Esencial $4,500 = $8,500 → combo <strong>$8,000/mes</strong>.<br>
-      <strong>Impulso Total:</strong> Setup: Web $5,300 + REPLai $2,990 + Google $2,500 + Meta $2,000 = $12,790 → combo <strong>$11,000</strong>. Mensual: Google Business $6,000 + Meta Business $7,500 + REPLai ~$1,500 + ChatBot $950 = $15,950 → combo <strong>$14,950/mes</strong>.
+      <strong>Presencia Digital:</strong> Setup: Web $5,300 + Google $2,500 + Meta $2,500 = $10,300 → combo <strong>$8,500</strong>. Mensual: Google Esencial $4,000 + Meta Esencial $4,500 = $8,500 → combo <strong>$8,000/mes</strong>.<br>
+      <strong>Impulso Total:</strong> Setup: Web $5,300 + REPLai $2,990 + Google $2,500 + Meta $2,500 = $13,290 → combo <strong>$11,000</strong>. Mensual: Google Business $6,000 + Meta Business $7,500 + REPLai ~$1,500 + ChatBot $950 = $15,950 → combo <strong>$14,950/mes</strong>.
     </div>
   </div>
 </div>
@@ -795,18 +805,23 @@
     <h2 class="sec-t" style="font-size:31px">TU COMPETENCIA YA ESTÁ INVIRTIENDO</h2>
     <p class="sec-s" style="margin-top:8px">Cuéntame qué necesita tu negocio y te cotizo a la medida por WhatsApp. Sin compromiso, sin tecnicismos.</p>
     <a href="https://wa.me/522295234432" class="cta-btn">QUIERO MÁS CLIENTES — HABLEMOS YA</a>
-    <p style="margin-top:24px;font-size:14px;color:var(--tenue)">REPLai Pilot · Inteligencia Artificial para Negocios · <strong style="color:var(--texto)">Glenn Gómez</strong></p>
+    <p style="margin-top:24px;font-size:14px;color:var(--tenue)">REPLai Pilot · Inteligencia Artificial para Negocios</p>
   </div>
 </div>
 
 <!-- ========== FOOTER ========== -->
 <div class="ft">
   <div class="ctn">
-    <div class="gn">REPLAI PILOT</div>
+    <div class="gn"><a href="https://glenngo.com" target="_blank" rel="noopener">GLENNGO</a></div>
     <p>Propuesta válida 30 días · Precios en MXN · IVA no incluido · Precios promocionales de lanzamiento</p>
-    <p>WhatsApp: <a class="enlace" href="https://wa.me/522295234432">+52 229 523 4432</a></p>
+    <p>Glenn Gómez · WhatsApp: <a class="enlace" href="https://wa.me/522295234432">+52 229 523 4432</a></p>
   </div>
 </div>
+
+<!-- ========== BOTÓN FLOTANTE WHATSAPP ========== -->
+<a class="wa-float" href="https://wa.me/522295234432" aria-label="Escríbenos por WhatsApp" rel="noopener">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
 
 <!-- ========== SCROLL REVEAL + NAV + CONTADORES + MODAL + PROGRESO ========== -->
 <script>
