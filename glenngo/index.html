@@ -13,245 +13,288 @@
 <meta property="og:locale" content="es_MX">
 <link rel="canonical" href="https://marketing.glenngo.com/">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
   *{margin:0;padding:0;box-sizing:border-box}
-  :root{--d:#0a0f0c;--g:#075b30;--gb:#178a3b;--o:#f58438;--c:#f5f3ef;--gr:#8a8a8a;--b:#1a2520;--card:rgba(255,255,255,.03)}
-  body{font-family:'Inter',sans-serif;background:var(--d);color:var(--c);line-height:1.6;overflow-x:hidden}
+  /* ══ Sistema "instrumento de precisión" — Auditor AEO / Laboratorio ══ */
+  :root{
+    --fondo:#0a0a0a; --texto:#f2f2f2; --acento:#0a9396; --verde:#54b878; --ambar:#d9c154; --rojo:#e05e5e;
+    --borde:rgba(242,242,242,.16); --tenue:rgba(242,242,242,.62); --panel:rgba(255,255,255,.04);
+    --mono:ui-monospace,"SF Mono","Cascadia Code","JetBrains Mono",Menlo,Consolas,monospace;
+  }
+  body{font-family:'Inter',sans-serif;background:var(--fondo);color:var(--texto);line-height:1.6;overflow-x:hidden}
+  /* Atmósfera: glow radial + retícula fina fijas */
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-2;
+    background:radial-gradient(52rem 30rem at 12% -6%,rgba(10,147,150,.09),transparent 68%),radial-gradient(40rem 26rem at 105% 110%,rgba(10,147,150,.05),transparent 70%)}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+    background:repeating-linear-gradient(to right,rgba(242,242,242,.035) 0 1px,transparent 1px 7rem),repeating-linear-gradient(to bottom,rgba(242,242,242,.03) 0 1px,transparent 1px 7rem);
+    mask-image:radial-gradient(80rem 50rem at 50% 0%,black,transparent 85%)}
+  ::selection{background:var(--acento);color:var(--fondo)}
   .ctn{max-width:940px;margin:0 auto;padding:0 24px}
+  .micro{font-family:var(--mono);font-size:.625rem;letter-spacing:.22em;text-transform:uppercase;color:var(--tenue)}
+  .num{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .linea-acento{height:1px;border:0;background:linear-gradient(to right,var(--acento),rgba(10,147,150,.12) 55%,transparent)}
+  .boton{display:inline-block;background:var(--acento);color:var(--fondo);font-weight:700;border-radius:.7rem;text-decoration:none;transition:transform .15s ease,filter .2s}
+  .boton:hover{filter:brightness(1.15);transform:translateY(-1px)}
+  .boton-o{display:inline-block;background:transparent;color:var(--acento);font-weight:700;border:1px solid rgba(10,147,150,.5);border-radius:.7rem;text-decoration:none;transition:border-color .2s,filter .2s,transform .15s}
+  .boton-o:hover{border-color:var(--acento);filter:brightness(1.15);transform:translateY(-1px)}
+  .enlace{color:var(--acento);text-decoration:none;border-bottom:1px solid rgba(10,147,150,.35);transition:border-color .2s}
+  .enlace:hover{border-color:var(--acento)}
 
-  /* === ANIMATIONS === */
-  @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-  @keyframes pulse{0%,100%{opacity:.4}50%{opacity:.8}}
-  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-  .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+  /* ══ ANIMACIONES ══ */
+  @keyframes pulse{0%,100%{opacity:.4}50%{opacity:.9}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes promoPulse{0%,100%{box-shadow:0 0 0 0 rgba(217,193,84,0)}50%{box-shadow:0 0 22px 3px rgba(217,193,84,.25)}}
+  @keyframes shimmer{0%,55%{left:-75%}80%,100%{left:135%}}
+  @keyframes dibujar{from{stroke-dashoffset:640}}
+  @keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,-30px) scale(1.15)}}
+  @keyframes rise{0%{transform:translateY(0);opacity:0}12%{opacity:.5}88%{opacity:.4}100%{transform:translateY(-88vh);opacity:0}}
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.22,.8,.3,1),transform .7s cubic-bezier(.22,.8,.3,1)}
   .reveal.in{opacity:1;transform:translateY(0)}
 
-  /* === HEADER NAV STICKY === */
+  /* ══ NAV STICKY + PROGRESO ══ */
   html{scroll-behavior:smooth}
-  .topbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,15,12,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--b);height:54px;display:flex;align-items:center;transition:background .3s}
-  .topbar.scrolled{background:rgba(10,15,12,.92)}
+  #progreso{position:fixed;top:0;left:0;height:2px;background:var(--acento);z-index:101;width:0;box-shadow:0 0 8px rgba(10,147,150,.6)}
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,10,.8);backdrop-filter:blur(12px);border-bottom:1px solid var(--borde);height:54px;display:flex;align-items:center;transition:background .3s}
+  .topbar.scrolled{background:rgba(10,10,10,.93)}
   .topbar-inner{width:100%;max-width:1080px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;gap:18px}
   .topbar img{height:26px;width:auto;display:block}
-  .nav{display:flex;align-items:center;gap:22px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .nav{display:flex;align-items:center;gap:20px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
   .nav::-webkit-scrollbar{display:none}
-  .nav a{color:#b8b8b0;font-size:12.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;text-decoration:none;white-space:nowrap;transition:color .2s}
-  .nav a:hover{color:var(--c)}
-  .nav-new{color:var(--o)!important;display:inline-flex;align-items:center;gap:6px}
-  .nav-dot{width:6px;height:6px;border-radius:50%;background:var(--o);animation:pulse 1.6s infinite;flex-shrink:0}
-  .nav-tag{font-size:9px;font-weight:800;background:var(--o);color:var(--d);padding:2px 6px;border-radius:100px;letter-spacing:1px}
+  .nav a{color:var(--tenue);font-size:12.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;text-decoration:none;white-space:nowrap;transition:color .2s}
+  .nav a:hover{color:var(--texto)}
+  .nav-new{color:#3fc6c9!important;display:inline-flex;align-items:center;gap:6px}
+  .nav-dot{width:6px;height:6px;border-radius:50%;background:var(--acento);box-shadow:0 0 8px var(--acento);animation:pulse 1.6s infinite;flex-shrink:0}
+  .nav-tag{font-size:9px;font-weight:800;background:var(--acento);color:var(--fondo);padding:2px 6px;border-radius:100px;letter-spacing:1px}
+  .nav-cta{padding:7px 14px;font-size:11.5px}
   .sec[id],#contacto{scroll-margin-top:70px}
 
-  /* === HERO === */
-  .hero{min-height:88vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;
-    background:linear-gradient(135deg,#0a0f0c 0%,#0d2818 40%,#0a1f12 60%,#0a0f0c 100%);background-size:200% 200%;animation:gradientShift 15s ease infinite}
-  .hero::before{content:'';position:absolute;inset:0;
-    background-image:radial-gradient(circle at 20% 30%,rgba(245,132,56,.08) 0%,transparent 50%),radial-gradient(circle at 80% 70%,rgba(23,138,59,.1) 0%,transparent 50%),radial-gradient(circle at 50% 50%,rgba(7,91,48,.05) 0%,transparent 70%);pointer-events:none}
-  .hero::after{content:'';position:absolute;inset:0;background-image:
-    linear-gradient(rgba(245,132,56,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(245,132,56,.03) 1px,transparent 1px);
-    background-size:50px 50px;pointer-events:none;mask-image:radial-gradient(ellipse at center,black 30%,transparent 80%)}
+  /* ══ HERO ══ */
+  .hero{min-height:92vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}
+  .hero-bglow{position:absolute;inset:0;background:radial-gradient(60rem 34rem at 50% -10%,rgba(10,147,150,.13),transparent 70%);pointer-events:none}
+  .orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.16;pointer-events:none;animation:orbFloat 18s ease-in-out infinite}
+  .orb.a{width:420px;height:420px;background:var(--acento);top:8%;left:-140px}
+  .orb.b{width:380px;height:380px;background:var(--verde);bottom:4%;right:-120px;animation-delay:-9s}
+  .hero-particulas{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .hero-particulas i{position:absolute;bottom:-8px;width:3px;height:3px;border-radius:50%;background:var(--acento);box-shadow:0 0 6px var(--acento);animation:rise linear infinite}
+  .hero-linea{position:absolute;left:0;right:0;bottom:34px;width:100%;opacity:.5;pointer-events:none}
+  .hero-linea path{stroke:var(--acento);stroke-width:2;fill:none;stroke-dasharray:640;animation:dibujar 2.4s cubic-bezier(.25,.9,.3,1) .6s both;filter:drop-shadow(0 0 6px rgba(10,147,150,.8))}
+  .hero-linea path.area{stroke:none;fill:url(#gradArea);opacity:.14;stroke-dasharray:none;animation:none;filter:none}
   .hero-inner{position:relative;z-index:2;max-width:780px;padding:0 24px}
-  .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;background:rgba(245,132,56,.08);border:1px solid rgba(245,132,56,.25);border-radius:100px;font-size:13px;font-weight:600;color:var(--o);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:36px;animation:fadeUp .8s ease}
-  .hero-dot{width:8px;height:8px;border-radius:50%;background:var(--o);animation:pulse 2s infinite}
-  .hero h1{font-size:46px;font-weight:900;letter-spacing:-1.5px;margin-bottom:20px;line-height:1.1;
-    background:linear-gradient(135deg,#f5f3ef 0%,#178a3b 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:fadeUp 1s ease .1s both}
-  .hero p{font-size:18px;color:#b0b0a8;max-width:680px;margin:0 auto;line-height:1.7;animation:fadeUp 1s ease .2s both}
-  .hero p strong{color:var(--gb)}
-  .hero p .accent{color:var(--o)}
-  .hero-stats{display:flex;justify-content:center;gap:40px;margin-top:40px;animation:fadeUp 1s ease .3s both}
+  .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;background:rgba(10,147,150,.08);border:1px solid rgba(10,147,150,.3);border-radius:100px;font-size:13px;font-weight:600;color:#3fc6c9;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:36px;animation:fadeUp .8s ease}
+  .hero-dot{width:8px;height:8px;border-radius:50%;background:var(--acento);box-shadow:0 0 8px var(--acento);animation:pulse 2s infinite}
+  .hero h1{font-size:48px;font-weight:800;letter-spacing:-.035em;line-height:1.04;margin-bottom:20px;
+    background:linear-gradient(135deg,#f2f2f2 60%,#3fc6c9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:fadeUp 1s ease .1s both}
+  .hero p{font-size:18px;color:var(--tenue);max-width:680px;margin:0 auto;line-height:1.7;animation:fadeUp 1s ease .2s both}
+  .hero p strong{color:var(--texto)}
+  .hero p .accent{color:#3fc6c9}
+  .hero-stats{display:flex;justify-content:center;gap:44px;margin-top:42px;animation:fadeUp 1s ease .3s both}
   .hero-stat{text-align:center}
-  .hero-stat .num{font-size:24px;font-weight:900;color:var(--o)}
-  .hero-stat .lbl{font-size:12px;color:var(--gr);text-transform:uppercase;letter-spacing:1px}
+  .hero-stat .num{font-size:26px;font-weight:800;color:#3fc6c9}
+  .hero-stat .lbl{font-family:var(--mono);font-size:10px;color:var(--tenue);text-transform:uppercase;letter-spacing:.18em;margin-top:2px}
 
-  /* === PROMO === */
-  .promo-badge{display:inline-flex;align-items:center;gap:8px;margin-top:24px;padding:9px 22px;background:rgba(245,132,56,.1);border:1px solid rgba(245,132,56,.4);border-radius:100px;color:var(--o);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;animation:fadeUp 1s ease .25s both,promoPulse 2.6s ease-in-out 1.4s infinite}
-  @keyframes promoPulse{0%,100%{box-shadow:0 0 0 0 rgba(245,132,56,0)}50%{box-shadow:0 0 20px 3px rgba(245,132,56,.22)}}
-  .promo-note{margin:-28px 0 8px;text-align:center;font-size:13px;font-style:italic;color:var(--o)}
-  .combo-addon{margin-top:12px;font-size:12.5px;color:var(--o);opacity:.85}
+  /* ══ PROMO ══ */
+  .promo-badge{display:inline-flex;align-items:center;gap:8px;margin-top:24px;padding:9px 22px;background:rgba(217,193,84,.08);border:1px solid rgba(217,193,84,.45);border-radius:100px;color:var(--ambar);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;animation:fadeUp 1s ease .25s both,promoPulse 2.6s ease-in-out 1.4s infinite}
+  .promo-note{margin:-28px 0 8px;text-align:center;font-size:13px;font-style:italic;color:var(--ambar)}
+  .combo-addon{margin-top:12px;font-family:var(--mono);font-size:11.5px;color:#3fc6c9;opacity:.9}
 
-  /* === SECTIONS === */
-  .sec{padding:70px 0;border-bottom:1px solid var(--b)}
-  .sec-t{font-size:30px;font-weight:800;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
-  .sec-s{font-size:16px;color:var(--gr)}
+  /* ══ SECCIONES ══ */
+  .sec{padding:70px 0;border-bottom:1px solid var(--borde)}
+  .sec-t{font-size:29px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px;text-transform:uppercase}
+  .sec-s{font-size:16px;color:var(--tenue)}
   .sec-head{margin-bottom:44px}
   .sec-head .sec-s{margin-bottom:8px}
-  .note{background:rgba(245,132,56,.05);border:1px solid rgba(245,132,56,.2);border-radius:14px;padding:22px;margin-top:28px;font-size:13px;color:var(--gr);line-height:1.7}
-  .note strong{color:var(--o)}
+  .note{background:rgba(217,193,84,.05);border:1px solid rgba(217,193,84,.22);border-radius:14px;padding:22px;margin-top:28px;font-size:13px;color:var(--tenue);line-height:1.7}
+  .note strong{color:var(--ambar)}
+  .nota-teal{background:rgba(10,147,150,.06);border-color:rgba(10,147,150,.3)}
+  .nota-teal strong{color:#3fc6c9}
+  .carta{background:var(--panel);border:1px solid var(--borde);border-radius:1rem;backdrop-filter:blur(6px);transition:border-color .3s,transform .3s}
+  .carta:hover{border-color:rgba(10,147,150,.38);transform:translateY(-3px)}
 
-  /* === IMPACTO: GRÁFICO CON/SIN === */
+  /* ══ IMPACTO ══ */
   .imp-grid{display:flex;flex-direction:column;gap:18px;margin-top:8px}
-  .imp-row{padding:18px 22px;background:var(--card);border:1px solid var(--b);border-radius:14px;transition:border-color .3s,transform .3s}
-  .imp-row:hover{border-color:rgba(23,138,59,.35);transform:translateY(-2px)}
+  .imp-row{padding:18px 22px}
   .imp-lbl{font-size:13px;font-weight:700;letter-spacing:.5px;margin-bottom:12px;text-transform:uppercase}
   .imp-pair{display:flex;flex-direction:column;gap:8px}
   .imp-side{display:flex;align-items:center;gap:10px}
-  .imp-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;width:92px;flex-shrink:0;color:var(--gr)}
-  .imp-bar-wrap{flex:1;background:rgba(255,255,255,.04);border-radius:100px;overflow:hidden}
-  .imp-bar{height:22px;border-radius:100px;width:0;transition:width 1.2s cubic-bezier(.16,1,.3,1);display:flex;align-items:center;justify-content:flex-end;padding:0 10px;font-size:11px;font-weight:800;white-space:nowrap;overflow:hidden}
+  .imp-tag{font-family:var(--mono);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;width:96px;flex-shrink:0;color:var(--tenue)}
+  .imp-bar-wrap{flex:1;background:rgba(255,255,255,.05);border-radius:100px;overflow:hidden}
+  .imp-bar{height:22px;border-radius:100px;width:0;transition:width 1.2s cubic-bezier(.16,1,.3,1);display:flex;align-items:center;justify-content:flex-end;padding:0 10px;font-family:var(--mono);font-size:10.5px;font-weight:700;white-space:nowrap;overflow:hidden}
   .reveal.in .imp-bar{width:var(--w)}
-  .imp-bar.bad{background:linear-gradient(90deg,rgba(245,132,56,.2),rgba(245,132,56,.55));color:#ffd9bd}
-  .imp-bar.good{background:linear-gradient(90deg,rgba(23,138,59,.35),var(--gb));color:#eafff0}
+  .imp-bar.bad{background:linear-gradient(90deg,rgba(224,94,94,.25),rgba(224,94,94,.75));color:#ffd6d6}
+  .imp-bar.good{background:linear-gradient(90deg,rgba(84,184,120,.3),var(--verde));color:#eafff0;box-shadow:0 0 12px rgba(84,184,120,.25)}
   .imp-why{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:34px}
-  .imp-check{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.5;padding:14px 16px;background:linear-gradient(135deg,rgba(23,138,59,.07),rgba(7,91,48,.03));border:1px solid rgba(23,138,59,.25);border-radius:12px}
-  .imp-check::before{content:"✓";color:var(--gb);font-weight:800;flex-shrink:0;margin-top:1px}
+  .imp-check{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.5;padding:14px 16px;background:rgba(84,184,120,.06);border:1px solid rgba(84,184,120,.28);border-radius:12px}
+  .imp-check::before{content:"✓";color:var(--verde);font-weight:800;flex-shrink:0;margin-top:1px}
 
-  /* === SERVICE CARDS === */
-  .card{background:var(--card);border:1px solid var(--b);border-radius:14px;padding:28px;transition:border-color .3s,transform .3s}
-  .card:hover{border-color:rgba(23,138,59,.35);transform:translateY(-4px)}
-  .card h3{font-size:17px;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
-  .card p{font-size:14px;color:var(--gr)}
-  .svc{background:var(--card);border:1px solid var(--b);border-radius:18px;margin-bottom:24px;overflow:hidden;transition:border-color .3s}
-  .svc:hover{border-color:rgba(23,138,59,.25)}
-  .svc-inner{display:grid;grid-template-columns:1fr 240px;gap:0}
+  /* ══ SERVICIOS ══ */
+  .svc{background:var(--panel);border:1px solid var(--borde);border-radius:18px;margin-bottom:24px;overflow:hidden;transition:border-color .3s;position:relative}
+  .svc:hover{border-color:rgba(10,147,150,.35)}
+  .svc.star{border-color:rgba(10,147,150,.55);box-shadow:0 0 34px rgba(10,147,150,.12)}
+  .svc-badge{position:absolute;top:0;right:0;background:var(--acento);color:var(--fondo);font-size:10.5px;font-weight:800;padding:6px 16px;border-radius:0 0 0 12px;text-transform:uppercase;letter-spacing:1px;z-index:3;box-shadow:0 0 14px rgba(10,147,150,.5)}
+  .svc-inner{display:grid;grid-template-columns:1fr 250px;gap:0}
   .svc-info{padding:28px}
-  .svc-tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--o);margin-bottom:10px;padding:4px 12px;background:rgba(245,132,56,.08);border-radius:100px}
+  .svc-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:#3fc6c9;margin-bottom:10px;padding:4px 12px;background:rgba(10,147,150,.08);border-radius:100px}
   .svc-tag .ico-svg{width:13px;height:13px;flex-shrink:0}
-  .svc-info h3{font-size:21px;font-weight:800;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
-  .svc-info h3 a{color:inherit;text-decoration:none;border-bottom:2px solid var(--o)}
-  .svc-info h3 a:hover{opacity:.8}
-  .svc-info>p{font-size:14px;color:var(--gr);margin-bottom:12px}
-  .svc-info ul{list-style:none;font-size:13px;color:var(--gr);display:grid;grid-template-columns:1fr 1fr;gap:4px 16px}
+  .svc-info h3{font-size:21px;font-weight:800;margin-bottom:8px;text-transform:uppercase;letter-spacing:-.01em}
+  .svc-info h3 a{color:inherit;text-decoration:none;border-bottom:2px solid var(--acento)}
+  .svc-info>p{font-size:14px;color:var(--tenue);margin-bottom:12px}
+  .svc-info ul{list-style:none;font-size:13px;color:var(--tenue);display:grid;grid-template-columns:1fr 1fr;gap:4px 16px}
   .svc-info ul li{padding:4px 0;padding-left:22px;position:relative}
-  .svc-info ul li::before{content:"✓";position:absolute;left:0;top:4px;color:var(--gb);font-weight:800}
-  .svc-optional{margin-top:12px;padding:12px 16px;background:rgba(245,132,56,.05);border:1px solid rgba(245,132,56,.15);border-radius:10px;font-size:13px;color:#c0c0b8;line-height:1.6}
-  .svc-optional strong{color:var(--o)}
-  .svc-see-more{margin-top:14px;font-size:13px;color:var(--o);font-weight:600}
-  .lnk{color:var(--o);text-decoration:none;border-bottom:1px dashed rgba(245,132,56,.5);transition:opacity .2s,border-color .2s}
-  .lnk:hover{opacity:.85;border-bottom:1px solid var(--o)}
-  .svc-price{background:rgba(0,0,0,.2);padding:28px 24px;display:flex;flex-direction:column;justify-content:center;border-left:1px solid var(--b)}
-  .svc-price .lbl{font-size:11px;color:var(--gr);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
-  .svc-price .amt{font-size:32px;font-weight:900;color:var(--gb);line-height:1}
-  .svc-price .per{font-size:14px;color:var(--gr);margin-bottom:12px}
-  .svc-price .setup-box{margin-top:auto;padding-top:12px;border-top:1px solid var(--b)}
-  .svc-price .setup-lbl{font-size:10px;color:var(--gr);text-transform:uppercase;letter-spacing:1px}
-  .svc-price .setup-amt{font-size:18px;font-weight:700;color:var(--o)}
-  .svc-price .setup-note{font-size:11px;color:var(--gr)}
+  .svc-info ul li::before{content:"✓";position:absolute;left:0;top:4px;color:var(--verde);font-weight:800}
+  .svc-optional{margin-top:12px;padding:12px 16px;background:rgba(217,193,84,.05);border:1px solid rgba(217,193,84,.2);border-radius:10px;font-size:13px;color:#d8d8cf;line-height:1.6}
+  .svc-optional strong{color:var(--ambar)}
+  .svc-btns{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap}
+  .svc-btns .boton,.svc-btns .boton-o{padding:11px 20px;font-size:13.5px}
+  .svc-see-more{margin-top:14px;font-size:13px;color:#3fc6c9;font-weight:600}
+  .svc-price{background:rgba(0,0,0,.35);padding:28px 24px;display:flex;flex-direction:column;justify-content:center;border-left:1px solid var(--borde)}
+  .svc-price .lbl{font-family:var(--mono);font-size:10px;color:var(--tenue);text-transform:uppercase;letter-spacing:.18em;margin-bottom:4px}
+  .svc-price .amt{font-family:var(--mono);font-size:32px;font-weight:800;color:var(--verde);line-height:1}
+  .svc-price .per{font-size:13px;color:var(--tenue);margin-bottom:12px}
+  .mensualidad{margin-top:auto;padding-top:14px;border-top:1px solid var(--borde)}
+  .mensualidad .m-lbl{font-size:17px;font-weight:800;color:var(--ambar);text-transform:uppercase;letter-spacing:.06em}
+  .mensualidad .m-note{font-size:12px;color:var(--tenue);margin:4px 0 10px;line-height:1.5}
+  .setup-box{margin-top:auto;padding-top:12px;border-top:1px solid var(--borde)}
+  .setup-lbl{font-family:var(--mono);font-size:10px;color:var(--tenue);text-transform:uppercase;letter-spacing:.18em}
+  .setup-amt{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--ambar)}
+  .setup-note{font-size:11px;color:var(--tenue)}
 
-  /* === PLAN CARDS (4) === */
+  /* ══ PLANES ══ */
   .plans-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;margin-top:24px}
-  .plan-card{background:var(--card);border:1px solid var(--b);border-radius:16px;overflow:hidden;transition:transform .3s}
+  .plan-card{background:var(--panel);border:1px solid var(--borde);border-radius:16px;overflow:hidden;transition:transform .3s;position:relative}
   .plan-card:hover{transform:translateY(-4px)}
-  .plan-card.g{border-color:rgba(23,138,59,.2)}
-  .plan-card.m{border-color:rgba(245,132,56,.2)}
-  .plan-card.m.hot{border-color:var(--o);box-shadow:0 0 30px rgba(245,132,56,.06)}
-  .plan-hd{padding:22px 20px;background:rgba(0,0,0,.15);border-bottom:1px solid var(--b)}
-  .plan-nm{font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;line-height:1.3}
+  .plan-card.hot{border-color:var(--ambar);box-shadow:0 0 30px rgba(217,193,84,.1)}
+  .plan-badge{position:absolute;top:0;right:0;background:var(--ambar);color:var(--fondo);font-size:9.5px;font-weight:800;padding:5px 12px;border-radius:0 0 0 10px;letter-spacing:1px;z-index:2}
+  .plan-hd{padding:22px 20px;background:rgba(0,0,0,.3);border-bottom:1px solid var(--borde)}
+  .plan-nm{font-size:14.5px;font-weight:800;text-transform:uppercase;letter-spacing:.02em;line-height:1.3}
   .plan-pr{display:flex;align-items:baseline;gap:4px;margin-top:12px}
-  .plan-pr .a{font-size:28px;font-weight:900;color:var(--gb);line-height:1}
-  .plan-pr .p{font-size:13px;color:var(--gr)}
-  .plan-su{font-size:12px;color:var(--gr);margin-top:8px}
-  .plan-su strong{color:var(--o)}
+  .plan-pr .a{font-family:var(--mono);font-size:27px;font-weight:800;color:var(--verde);line-height:1}
+  .plan-pr .p{font-size:12.5px;color:var(--tenue)}
+  .plan-mes{font-size:11.5px;color:var(--tenue);margin-top:4px}
+  .plan-setup{font-size:13px;color:var(--texto);margin-top:8px}
+  .plan-setup strong{color:var(--ambar);font-weight:800}
   .plan-bd{padding:20px}
   .plan-bd ul{list-style:none}
-  .plan-bd ul li{padding:5px 0;font-size:13px;display:flex;align-items:flex-start;gap:8px;line-height:1.4}
-  .plan-bd ul li::before{content:"✓";color:var(--gb);font-weight:800;flex-shrink:0}
-  .plan-break{font-size:11px;color:var(--gr);margin-top:8px;padding-top:8px;border-top:1px solid var(--b)}
+  .plan-bd ul li{padding:5px 0;font-size:13px;display:flex;align-items:flex-start;gap:8px;line-height:1.4;color:var(--tenue)}
+  .plan-bd ul li::before{content:"✓";color:var(--verde);font-weight:800;flex-shrink:0}
+  .plan-break{font-family:var(--mono);font-size:10.5px;color:var(--tenue);margin-top:8px;padding-top:8px;border-top:1px solid var(--borde)}
 
-  /* === COMBOS === */
+  /* ══ COMBOS ══ */
   .combos{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px}
-  .combo{background:var(--card);border:1px solid var(--b);border-radius:18px;overflow:hidden;position:relative;transition:transform .3s,box-shadow .3s}
-  .combo:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
-  .combo.hot{border-color:var(--o);box-shadow:0 0 50px rgba(245,132,56,.06)}
-  .combo-badge{position:absolute;top:0;right:0;background:var(--o);color:var(--d);font-size:11px;font-weight:800;padding:7px 18px;border-radius:0 0 0 12px;text-transform:uppercase;letter-spacing:1px;z-index:3}
-  .combo-hd{padding:34px 30px 22px;border-bottom:1px solid var(--b);background:rgba(0,0,0,.15)}
-  .combo-nm{font-size:22px;font-weight:800;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
-  .combo-tg{font-size:13px;color:var(--gr);margin-bottom:22px}
+  .combo{background:var(--panel);border:1px solid var(--borde);border-radius:18px;overflow:hidden;position:relative;transition:transform .3s,box-shadow .3s}
+  .combo:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.35)}
+  .combo.hot{border-color:var(--acento);box-shadow:0 0 44px rgba(10,147,150,.14)}
+  .combo-badge{position:absolute;top:0;right:0;background:var(--acento);color:var(--fondo);font-size:11px;font-weight:800;padding:7px 18px;border-radius:0 0 0 12px;text-transform:uppercase;letter-spacing:1px;z-index:3}
+  .combo-hd{padding:34px 30px 22px;border-bottom:1px solid var(--borde);background:rgba(0,0,0,.3)}
+  .combo-nm{font-size:22px;font-weight:800;margin-bottom:4px;text-transform:uppercase;letter-spacing:-.01em}
+  .combo-tg{font-size:13px;color:var(--tenue);margin-bottom:22px}
   .combo-pr{display:flex;align-items:baseline;gap:6px}
-  .combo-pr .a{font-size:40px;font-weight:900;color:var(--gb);line-height:1}
-  .combo-pr .p{font-size:15px;color:var(--gr)}
-  .combo-su{margin-top:10px;font-size:13px;color:var(--gr)}
-  .combo-su strong{color:var(--o)}
-  .save{display:inline-block;background:rgba(23,138,59,.15);color:var(--gb);font-size:12px;font-weight:700;padding:4px 12px;border-radius:100px;margin-left:6px}
+  .combo-pr .a{font-family:var(--mono);font-size:40px;font-weight:800;color:var(--verde);line-height:1}
+  .combo-pr .p{font-size:15px;color:var(--tenue)}
+  .combo-su{margin-top:10px;font-size:13px;color:var(--tenue)}
+  .combo-su strong{color:var(--ambar)}
+  .save{display:inline-block;background:rgba(84,184,120,.14);color:var(--verde);font-size:12px;font-weight:700;padding:4px 12px;border-radius:100px;margin-left:6px}
   .combo-bd{padding:26px 30px}
-  .combo-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--o);margin:22px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--b)}
+  .combo-lbl{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:#3fc6c9;margin:22px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--borde)}
   .combo-lbl:first-child{margin-top:0}
   .fl{list-style:none}
-  .fl li{padding:8px 0;font-size:14px;display:flex;align-items:flex-start;gap:10px;line-height:1.5}
-  .fl li::before{content:"✓";color:var(--gb);font-weight:800;flex-shrink:0;margin-top:1px}
+  .fl li{padding:8px 0;font-size:14px;display:flex;align-items:flex-start;gap:10px;line-height:1.5;color:var(--tenue)}
+  .fl li::before{content:"✓";color:var(--verde);font-weight:800;flex-shrink:0;margin-top:1px}
 
-  /* === TABLE === */
-  .tbl{width:100%;border-collapse:collapse;margin-top:20px;font-size:14px}
-  .tbl th{text-align:left;padding:14px 16px;background:rgba(255,255,255,.03);font-weight:700;color:var(--gr);border-bottom:2px solid var(--b);font-size:11px;text-transform:uppercase;letter-spacing:1px}
-  .tbl td{padding:14px 16px;border-bottom:1px solid var(--b)}
-  .tbl tr:last-child td{border-bottom:none}
-  .chk{color:var(--gb);font-weight:700}
-  .crs{color:#444}
-  .em{font-size:18px;font-weight:800;color:var(--gb)}
+  /* ══ TABLA (rediseñada: solo combos, sin columna individual) ══ */
   .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tbl{width:100%;border-collapse:collapse;margin-top:20px;font-size:14px}
+  .tbl th{text-align:left;padding:14px 16px;background:rgba(255,255,255,.03);font-family:var(--mono);font-weight:700;color:var(--tenue);border-bottom:2px solid var(--borde);font-size:10.5px;text-transform:uppercase;letter-spacing:.16em}
+  .tbl td{padding:13px 16px;border-bottom:1px solid var(--borde);color:var(--tenue)}
+  .tbl th.si,.tbl td.si{text-align:center}
+  .tbl tr:last-child td{border-bottom:none}
+  .chk{color:var(--verde);font-weight:800}
+  .crs{color:#4a4a4a}
+  .em{font-family:var(--mono);font-size:19px;font-weight:800;color:var(--verde)}
+  .em-setup{font-family:var(--mono);font-size:19px;font-weight:800;color:var(--ambar)}
+  .tbl-total td{background:rgba(255,255,255,.03);font-weight:700;color:var(--texto)}
 
-  /* === AEO === */
+  /* ══ AEO ══ */
   .aeo-t{font-size:26px}
   .aeo-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:8px}
-  .aeo-card .aeo-pr{display:flex;align-items:baseline;gap:6px;margin:10px 0}
-  .aeo-pr .a{font-size:26px;font-weight:900;color:var(--gb)}
-  .aeo-pr .p{font-size:12px;color:var(--gr)}
-  .aeo-note{margin-top:20px;text-align:center;font-size:13px;font-style:italic;color:var(--gr)}
-  .aeo-tool{margin-top:44px;padding:30px;background:var(--card);border:1px solid var(--b);border-radius:18px}
-  .aeo-tool h3{font-size:15px;font-weight:800;letter-spacing:1px;color:var(--o);margin-bottom:12px;text-transform:uppercase}
+  .aeo-card{padding:28px}
+  .aeo-card h3{font-size:15.5px;font-weight:800;text-transform:uppercase;letter-spacing:.01em}
+  .aeo-pr{display:flex;align-items:baseline;gap:6px;margin:10px 0}
+  .aeo-pr .a{font-family:var(--mono);font-size:26px;font-weight:800;color:var(--verde)}
+  .aeo-pr .p{font-size:12px;color:var(--tenue)}
+  .aeo-note{margin-top:20px;text-align:center;font-size:13px;font-style:italic;color:var(--tenue)}
+  .aeo-tool{margin-top:44px;padding:30px}
+  .aeo-tool h3{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.16em;color:#3fc6c9;margin-bottom:12px;text-transform:uppercase}
   .shot-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px}
   .shot{margin:0;cursor:zoom-in}
-  .shot img{display:block;width:100%;border-radius:12px;border:1px solid var(--b);transition:transform .35s ease,border-color .35s ease}
-  .shot:hover img{transform:scale(1.03);border-color:rgba(23,138,59,.35)}
-  .shot figcaption{margin-top:8px;font-size:12px;color:var(--gr);text-align:center;line-height:1.5}
+  .shot img{display:block;width:100%;border-radius:12px;border:1px solid var(--borde);transition:transform .35s ease,border-color .35s ease}
+  .shot:hover img{transform:scale(1.03);border-color:rgba(10,147,150,.5)}
+  .shot figcaption{margin-top:8px;font-size:12px;color:var(--tenue);text-align:center;line-height:1.5}
   .aeo-case{margin-top:44px;text-align:center}
-  .aeo-case-t{font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
-  .aeo-counter{display:flex;align-items:center;justify-content:center;gap:28px;margin-top:26px}
-  .ac-num{font-size:56px;font-weight:900;color:var(--gb);line-height:1}
-  .ac-num.antes{color:var(--o)}
-  .ac-arrow{font-size:36px;font-weight:900;color:var(--gb)}
-  .ac-lbl{margin-top:8px;font-size:11px;letter-spacing:2px;color:var(--gr)}
+  .aeo-case-t{font-size:21px;font-weight:800;text-transform:uppercase;letter-spacing:-.01em;margin-bottom:12px}
+  .aeo-counter{display:flex;align-items:center;justify-content:center;gap:30px;margin-top:26px}
+  .ac-num{font-family:var(--mono);font-size:54px;font-weight:800;line-height:1}
+  .ac-num.antes{color:var(--rojo)}
+  .ac-num.hoy{color:var(--verde);text-shadow:0 0 24px rgba(84,184,120,.35)}
+  .ac-arrow{font-size:34px;font-weight:900;color:var(--verde)}
+  .ac-lbl{font-family:var(--mono);margin-top:8px;font-size:9.5px;letter-spacing:.18em;color:var(--tenue);text-transform:uppercase}
   .ico-svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-  .card .ic .ico-svg{width:30px;height:30px;color:var(--o)}
+  .aeo-card .ic .ico-svg{width:28px;height:28px;color:#3fc6c9}
 
-  /* === MODAL CAPTURAS === */
-  .modal{position:fixed;inset:0;z-index:200;background:rgba(5,8,6,.93);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;flex-direction:column;padding:24px}
+  /* ══ MODAL ══ */
+  .modal{position:fixed;inset:0;z-index:200;background:rgba(4,4,4,.94);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;flex-direction:column;padding:24px}
   .modal.open{display:flex}
-  .modal img{max-width:min(1000px,92vw);max-height:76vh;border-radius:14px;border:1px solid var(--b)}
-  .modal-cap{margin-top:14px;font-size:13px;color:var(--c);text-align:center;max-width:640px;line-height:1.6}
-  .modal-x{position:absolute;top:18px;right:22px;background:var(--o);color:var(--d);border:none;font-size:15px;font-weight:800;width:38px;height:38px;border-radius:50%;cursor:pointer;transition:transform .2s}
-  .modal-x:hover{transform:scale(1.1)}
+  .modal img{max-width:min(1000px,92vw);max-height:76vh;border-radius:14px;border:1px solid var(--borde)}
+  .modal-cap{margin-top:14px;font-size:13px;color:var(--texto);text-align:center;max-width:640px;line-height:1.6}
+  .modal-x{position:absolute;top:18px;right:22px;background:var(--acento);color:var(--fondo);border:none;font-size:15px;font-weight:800;width:38px;height:38px;border-radius:50%;cursor:pointer;transition:transform .2s,filter .2s}
+  .modal-x:hover{transform:scale(1.1);filter:brightness(1.15)}
 
-  /* === ETAPAS (PROCESO) === */
+  /* ══ PROCESO ══ */
   .tl{display:flex;flex-direction:column;gap:0;position:relative;margin-top:20px}
-  .tl::before{content:'';position:absolute;left:18px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--g),var(--gb),var(--o));opacity:.3}
+  .tl::before{content:'';position:absolute;left:18px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--acento),var(--verde));opacity:.35}
   .tl-i{display:flex;gap:24px;align-items:flex-start;padding-bottom:28px;position:relative}
-  .tl-n{width:38px;height:38px;border-radius:50%;background:var(--d);border:2px solid var(--gb);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;flex-shrink:0;z-index:2;color:var(--gb)}
-  .tl-i.active .tl-n{background:linear-gradient(135deg,var(--g),var(--gb));color:var(--c)}
+  .tl-n{width:38px;height:38px;border-radius:50%;background:var(--fondo);border:2px solid var(--acento);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:800;font-size:14px;flex-shrink:0;z-index:2;color:#3fc6c9}
+  .tl-i.active .tl-n{background:var(--acento);color:var(--fondo);box-shadow:0 0 16px rgba(10,147,150,.5)}
   .tl-c{flex:1;padding-top:2px}
-  .tl-c h4{font-size:15px;font-weight:700;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
-  .tl-c p{font-size:14px;color:var(--gr)}
-  .tl-c .t{display:inline-block;font-size:11px;color:var(--o);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-top:6px;padding:3px 10px;background:rgba(245,132,56,.08);border-radius:100px}
+  .tl-c h4{font-size:15px;font-weight:800;margin-bottom:6px;text-transform:uppercase;letter-spacing:.01em}
+  .tl-c p{font-size:14px;color:var(--tenue)}
+  .tl-c .t{display:inline-block;font-family:var(--mono);font-size:9.5px;color:#3fc6c9;font-weight:700;text-transform:uppercase;letter-spacing:.16em;margin-top:6px;padding:3px 10px;background:rgba(10,147,150,.08);border:1px solid rgba(10,147,150,.25);border-radius:100px}
 
-  /* === CTA === */
-  .cta{text-align:center;padding:80px 0;background:linear-gradient(135deg,rgba(7,91,48,.1),rgba(245,132,56,.05));position:relative;overflow:hidden}
-  .cta::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 50% 50%,rgba(245,132,56,.05) 0%,transparent 60%);pointer-events:none}
-  .cta-btn{display:inline-block;padding:18px 44px;background:var(--o);color:var(--d);font-weight:800;font-size:17px;border-radius:100px;text-decoration:none;margin-top:24px;letter-spacing:.5px;transition:transform .3s,box-shadow .3s;position:relative;z-index:2;overflow:hidden}
-  .cta-btn:hover{transform:scale(1.05);box-shadow:0 8px 30px rgba(245,132,56,.3)}
-  .cta-btn::after{content:'';position:absolute;top:0;left:-75%;width:50%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);animation:shimmer 4s ease-in-out infinite}
-  @keyframes shimmer{0%,55%{left:-75%}80%,100%{left:135%}}
+  /* ══ CTA ══ */
+  .cta{text-align:center;padding:84px 0;background:radial-gradient(50rem 26rem at 50% 100%,rgba(10,147,150,.1),transparent 70%);position:relative;overflow:hidden}
+  .cta::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 50% 60%,rgba(84,184,120,.05) 0%,transparent 55%);pointer-events:none}
+  .cta-btn{display:inline-block;padding:19px 46px;background:var(--acento);color:var(--fondo);font-weight:800;font-size:17.5px;border-radius:100px;text-decoration:none;margin-top:24px;letter-spacing:.02em;transition:transform .3s,box-shadow .3s,filter .2s;position:relative;z-index:2;overflow:hidden;box-shadow:0 0 30px rgba(10,147,150,.35)}
+  .cta-btn:hover{transform:scale(1.05);box-shadow:0 8px 40px rgba(10,147,150,.55);filter:brightness(1.12)}
+  .cta-btn::after{content:'';position:absolute;top:0;left:-75%;width:50%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.4),transparent);transform:skewX(-20deg);animation:shimmer 4s ease-in-out infinite}
 
-  /* === FOOTER === */
-  .ft{padding:44px 0;text-align:center;border-top:1px solid var(--b)}
-  .ft .gn{font-weight:800;color:var(--gb);font-size:18px;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px}
-  .ft p{font-size:13px;color:var(--gr);margin-bottom:4px}
+  /* ══ FOOTER ══ */
+  .ft{padding:44px 0;text-align:center;border-top:1px solid var(--borde)}
+  .ft .gn{font-weight:800;color:#3fc6c9;font-size:17px;margin-bottom:6px;text-transform:uppercase;letter-spacing:.12em}
+  .ft p{font-size:13px;color:var(--tenue);margin-bottom:4px}
 
   @media(max-width:768px){
-    .hero h1{font-size:30px}
-    .hero-stats{flex-wrap:wrap;gap:20px}
+    .hero h1{font-size:31px}
+    .hero-stats{flex-wrap:wrap;gap:18px}
     .combos,.svc-inner{grid-template-columns:1fr}
     .plans-grid{grid-template-columns:1fr 1fr}
-    .svc-price{border-left:none;border-top:1px solid var(--b);flex-direction:row;align-items:center;gap:16px;flex-wrap:wrap}
+    .svc-price{border-left:none;border-top:1px solid var(--borde);flex-direction:row;align-items:center;gap:16px;flex-wrap:wrap}
+    .mensualidad,.setup-box{margin-top:0;border-top:none;padding-top:0}
     .svc-info ul{grid-template-columns:1fr}
     .aeo-grid{grid-template-columns:1fr}
     .shot-grid{grid-template-columns:1fr}
-    .ac-num{font-size:42px}
-    .ac-arrow{font-size:28px}
+    .ac-num{font-size:40px}
+    .ac-arrow{font-size:26px}
     .topbar-inner{padding:0 14px;gap:10px}
     .topbar img{height:22px}
-    .nav{gap:16px}
+    .nav{gap:15px}
+    .nav-cta{display:none}
     .imp-why{grid-template-columns:1fr}
-    .imp-tag{width:62px;font-size:9px}
-    .imp-bar{height:20px;font-size:10px}
+    .imp-tag{width:62px;font-size:8.5px}
+    .imp-bar{height:20px;font-size:9.5px}
+    .orb{filter:blur(60px)}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .orb,.hero-particulas i,.hero-linea path,.cta-btn::after{animation:none!important}
+    .reveal{transition:none;opacity:1;transform:none}
   }
 </style>
 </head>
@@ -267,8 +310,9 @@
   <symbol id="i-tool" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
   <symbol id="i-radar" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
   <symbol id="i-up" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 17"/><path d="M17 6h6v6"/></symbol>
-  <symbol id="i-down" viewBox="0 0 24 24"><path d="M23 18l-9.5-9.5-5 5L1 6"/><path d="M17 18h6v-6"/></symbol>
 </svg>
+
+<div id="progreso" aria-hidden="true"></div>
 
 <!-- ========== NAV STICKY ========== -->
 <div class="topbar" id="topbar">
@@ -280,72 +324,75 @@
       <a href="#aeo" class="nav-new">AEO<span class="nav-dot"></span><span class="nav-tag">NUEVO</span></a>
       <a href="#planes">Planes</a>
       <a href="#combos">Combos</a>
-      <a href="#contacto">Contacto</a>
+      <a href="#contacto" class="boton nav-cta">Hablemos</a>
     </nav>
   </div>
 </div>
 
-<!-- ========== HERO: IA DESDE EL PRINCIPIO ========== -->
+<!-- ========== HERO ========== -->
 <div class="hero">
+  <div class="hero-bglow"></div>
+  <div class="orb a"></div>
+  <div class="orb b"></div>
+  <div class="hero-particulas" aria-hidden="true"><i style="left:8%;animation-duration:11s;animation-delay:0s"></i><i style="left:16%;animation-duration:14s;animation-delay:3s"></i><i style="left:24%;animation-duration:12s;animation-delay:6s"></i><i style="left:32%;animation-duration:16s;animation-delay:1s"></i><i style="left:40%;animation-duration:13s;animation-delay:4s"></i><i style="left:48%;animation-duration:15s;animation-delay:7s"></i><i style="left:56%;animation-duration:12s;animation-delay:2s"></i><i style="left:64%;animation-duration:17s;animation-delay:5s"></i><i style="left:72%;animation-duration:11s;animation-delay:8s"></i><i style="left:80%;animation-duration:15s;animation-delay:1.5s"></i><i style="left:88%;animation-duration:13s;animation-delay:6.5s"></i><i style="left:94%;animation-duration:16s;animation-delay:3.5s"></i></div>
+  <svg class="hero-linea" viewBox="0 0 1200 160" preserveAspectRatio="none" aria-hidden="true">
+    <defs><linearGradient id="gradArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a9396"/><stop offset="1" stop-color="#0a9396" stop-opacity="0"/></linearGradient></defs>
+    <path class="area" d="M0,150 C150,145 240,130 380,118 C520,106 600,120 720,96 C840,72 920,58 1060,36 C1120,26 1170,18 1200,12 L1200,160 L0,160 Z"/>
+    <path d="M0,150 C150,145 240,130 380,118 C520,106 600,120 720,96 C840,72 920,58 1060,36 C1120,26 1170,18 1200,12"/>
+  </svg>
   <div class="hero-inner">
     <div class="hero-badge"><span class="hero-dot"></span> PROPUESTA COMERCIAL · WEB + ADS + IA DESDE EL DÍA 1</div>
     <h1>MÁS CLIENTES,<br>MEJOR CONECTADOS</h1>
-    <p>Tu negocio con <strong>diseño web profesional</strong>, campañas de <span class="accent">Google Ads y Meta Ads</span>, e <strong>Inteligencia Artificial</strong> que responde tu WhatsApp 24/7 y hace que ChatGPT, Gemini y Google te recomienden — con <strong>SEO y AEO integrados en cada línea de código</strong>, optimizado para tu nicho y tu ciudad.</p>
+    <p>Mientras lees esto, alguien en tu ciudad le está preguntando a Google o a una IA por un servicio como el tuyo. Nosotros hacemos que te encuentren a <strong>ti</strong>: <span class="accent">web profesional</span>, campañas de <span class="accent">Google y Meta Ads</span> e <strong>Inteligencia Artificial</strong> que responde tu WhatsApp 24/7 y logra que ChatGPT, Gemini y Google te recomienden.</p>
     <div class="promo-badge">⚡ PRECIOS DE PROMOCIÓN — SUBEN PRONTO</div>
     <div class="hero-stats">
       <div class="hero-stat"><div class="num" data-count="24" data-suffix="/7">24/7</div><div class="lbl">Atención con IA</div></div>
-      <div class="hero-stat"><div class="num" data-count="40" data-prefix="15-">15-40</div><div class="lbl">Leads al mes</div></div>
-      <div class="hero-stat"><div class="num">&lt;$150</div><div class="lbl">Costo por lead</div></div>
+      <div class="hero-stat"><div class="num">SEGUNDOS</div><div class="lbl">De respuesta, no horas</div></div>
+      <div class="hero-stat"><div class="num" data-count="100" data-prefix="/">/100</div><div class="lbl">Puntaje AEO logrado</div></div>
       <div class="hero-stat"><div class="num" data-count="15" data-suffix=" días">15 días</div><div class="lbl">Entre reportes</div></div>
     </div>
   </div>
 </div>
 
-<!-- ========== EL IMPACTO: SIN vs CON (GRÁFICO) ========== -->
+<!-- ========== EL IMPACTO ========== -->
 <div class="sec" id="impacto">
   <div class="ctn">
     <div class="sec-head reveal">
+      <p class="micro">Diagnóstico honesto</p>
       <h2 class="sec-t">EL IMPACTO, EN NÚMEROS</h2>
-      <p class="sec-s">Sin agencia vs con nosotros. Sin tecnicismos: lo que un dueño de negocio necesita ver.</p>
+      <p class="sec-s">Así está hoy tu negocio sin agencia — y así queda trabajando con nosotros. Sin tecnicismos.</p>
     </div>
     <div class="imp-grid">
-      <div class="imp-row reveal">
+      <div class="imp-row carta reveal">
         <div class="imp-lbl">Tu web ante la IA (ChatGPT, Gemini, Google)</div>
         <div class="imp-pair">
-          <div class="imp-side"><span class="imp-tag">Sin agencia</span><div class="imp-bar-wrap"><div class="imp-bar bad" style="--w:44%"><span>44/100</span></div></div></div>
-          <div class="imp-side"><span class="imp-tag">Con nosotros</span><div class="imp-bar-wrap"><div class="imp-bar good" style="--w:100%"><span>100/100 — legible y citable</span></div></div></div>
+          <div class="imp-side"><span class="imp-tag">Sin agencia</span><div class="imp-bar-wrap"><div class="imp-bar bad" style="--w:44%"><span>44/100 — invisible</span></div></div></div>
+          <div class="imp-side"><span class="imp-tag">Con nosotros</span><div class="imp-bar-wrap"><div class="imp-bar good" style="--w:100%"><span>100/100 — la IA te cita</span></div></div></div>
         </div>
       </div>
-      <div class="imp-row reveal">
+      <div class="imp-row carta reveal">
         <div class="imp-lbl">Respuesta a tus clientes por WhatsApp</div>
         <div class="imp-pair">
           <div class="imp-side"><span class="imp-tag">Sin agencia</span><div class="imp-bar-wrap"><div class="imp-bar bad" style="--w:20%"><span>En horas</span></div></div></div>
           <div class="imp-side"><span class="imp-tag">Con nosotros</span><div class="imp-bar-wrap"><div class="imp-bar good" style="--w:100%"><span>24/7 automática con IA</span></div></div></div>
         </div>
       </div>
-      <div class="imp-row reveal">
-        <div class="imp-lbl">Clientes nuevos por mes</div>
-        <div class="imp-pair">
-          <div class="imp-side"><span class="imp-tag">Sin agencia</span><div class="imp-bar-wrap"><div class="imp-bar bad" style="--w:15%"><span>0-5</span></div></div></div>
-          <div class="imp-side"><span class="imp-tag">Con nosotros</span><div class="imp-bar-wrap"><div class="imp-bar good" style="--w:85%"><span>15-40 con Ads + IA</span></div></div></div>
-        </div>
-      </div>
-      <div class="imp-row reveal">
-        <div class="imp-lbl">Control del presupuesto</div>
+      <div class="imp-row carta reveal">
+        <div class="imp-lbl">Cómo se ve tu inversión</div>
         <div class="imp-pair">
           <div class="imp-side"><span class="imp-tag">Sin agencia</span><div class="imp-bar-wrap"><div class="imp-bar bad" style="--w:18%"><span>Sin medir</span></div></div></div>
-          <div class="imp-side"><span class="imp-tag">Con nosotros</span><div class="imp-bar-wrap"><div class="imp-bar good" style="--w:100%"><span>Cada peso medido (GA4 + conversiones)</span></div></div></div>
+          <div class="imp-side"><span class="imp-tag">Con nosotros</span><div class="imp-bar-wrap"><div class="imp-bar good" style="--w:100%"><span>Cada peso medido (GA4)</span></div></div></div>
         </div>
       </div>
     </div>
     <div class="imp-why reveal">
-      <div class="imp-check">Reportes cada 15 días con análisis estratégico, no capturas de pantalla</div>
+      <div class="imp-check">Reportes cada 15 días con análisis y siguientes pasos</div>
       <div class="imp-check">Precios transparentes desde el primer contacto</div>
-      <div class="imp-check">Todo integrado: web + ads + IA funcionando como un solo sistema</div>
-      <div class="imp-check">Auditoría AEO con herramienta propia (8 ejes, 21 robots de IA)</div>
+      <div class="imp-check">Web + Ads + IA funcionando como un solo sistema</div>
+      <div class="imp-check">Auditoría con herramienta propia: 8 ejes, 21 robots de IA</div>
     </div>
     <div class="note reveal">
-      <strong>HONESTIDAD PRIMERO:</strong> estimaciones basadas en CPC promedio de $4-8 MXN para servicios locales en ciudades medianas. Los resultados dependen de tu ciudad, tu servicio y tu tasa de cierre. No prometemos posición #1 en Google — nadie puede garantizar eso honestamente. Lo que sí garantizamos: reportes transparentes y optimización constante con datos reales.
+      <strong>HONESTIDAD PRIMERO:</strong> no prometemos posición #1 en Google — nadie puede garantizar eso honestamente. Lo que sí garantizamos: todo se mide, se reporta cada 15 días y se optimiza con datos reales de tu negocio.
     </div>
   </div>
 </div>
@@ -354,31 +401,39 @@
 <div class="sec" id="servicios">
   <div class="ctn">
     <div class="sec-head reveal">
+      <p class="micro">Elige tu punto de partida</p>
       <h2 class="sec-t">ELIGE LO QUE TU NEGOCIO NECESITA</h2>
-      <p class="sec-s">Cada servicio funciona por sí solo. Pero funcionan mejor juntos.</p>
+      <p class="sec-s">Cada servicio funciona por sí solo. Juntos, funcionan mejor.</p>
     </div>
 
-    <!-- REPLAI PILOT -->
-    <div class="svc reveal">
+    <!-- REPLAI PILOT ★ PRODUCTO ESTRELLA -->
+    <div class="svc star reveal">
+      <div class="svc-badge">⭐ NUESTRO PRODUCTO ESTRELLA</div>
       <div class="svc-inner">
         <div class="svc-info">
           <span class="svc-tag"><svg class="ico-svg"><use href="#i-bot"/></svg>INTELIGENCIA ARTIFICIAL</span>
-          <h3><a href="https://replaipilot.com" target="_blank" rel="noopener">REPLAI PILOT</a> — ASISTENTE WHATSAPP 24/7</h3>
-          <p>IA que responde WhatsApp automáticamente, califica clientes, agenda servicios y gestiona conversaciones desde un Dashboard centralizado.</p>
+          <h3><a href="https://replaipilot.com" target="_blank" rel="noopener">REPLAI PILOT</a> — TU VENDEDOR QUE NUNCA DUERME</h3>
+          <p>Cada minuto que tardas en responder un WhatsApp, un cliente se va con tu competencia. REPLai Pilot responde por ti al instante, los <strong>7 días de la semana</strong>, mientras tú sigues trabajando.</p>
           <ul>
-            <li>Respuestas inmediatas 24/7</li>
-            <li>Calificación automática de leads</li>
-            <li>Dashboard con métricas</li>
-            <li>Versión VIP FumiPlus</li>
+            <li>Responde en segundos, 24/7 — incluso de madrugada</li>
+            <li>Califica leads: separa curiosos de compradores</li>
+            <li>Agenda servicios sin que toques el celular</li>
+            <li>Dashboard: conversaciones y métricas en una pantalla</li>
+            <li>Cada chat queda registrado — ningún cliente se pierde</li>
+            <li>Versión VIP FumiPlus (sector fumigación)</li>
           </ul>
+          <div class="svc-btns">
+            <a class="boton-o" href="https://replaipilot.com" target="_blank" rel="noopener">VER REPLAIPILOT.COM →</a>
+          </div>
         </div>
         <div class="svc-price">
           <div class="lbl">IMPLEMENTACIÓN</div>
           <div class="amt">$2,990</div>
           <div class="per">Pago único · TDC y MSI</div>
-          <div class="setup-box">
-            <div class="setup-lbl">MENSUALIDAD</div>
-            <div class="setup-note">Según plan elegido<br>Descuentos 15-35% anualidad<br><a class="lnk" href="https://replaipilot.com/es#pricing" target="_blank" rel="noopener">replaipilot.com/es#pricing</a></div>
+          <div class="mensualidad">
+            <div class="m-lbl">+ MENSUALIDAD</div>
+            <div class="m-note">Según el plan que elijas.<br>La implementación es pago único; el servicio de IA tiene mensualidad.</div>
+            <a class="boton" style="padding:10px 16px;font-size:12.5px;text-align:center" href="https://replaipilot.com/es#pricing" target="_blank" rel="noopener">VER PLANES</a>
           </div>
         </div>
       </div>
@@ -390,7 +445,7 @@
         <div class="svc-info">
           <span class="svc-tag"><svg class="ico-svg"><use href="#i-globe"/></svg>DISEÑO WEB PROFESIONAL</span>
           <h3>SITIO WEB SEO + HOSTING VPS</h3>
-          <p>Web App semántica con SEO completo, optimizada para Google, responsiva y con todo incluido por un año.</p>
+          <p>Si no apareces en Google, para tus clientes no existes. Tu web queda lista para vender: rápida, medida y posicionada, con todo incluido por un año.</p>
           <ul>
             <li>Diseño + desarrollo + vinculaciones</li>
             <li>10 emails corporativos</li>
@@ -398,6 +453,8 @@
             <li>Metatags + Keywords + Sitemap XML</li>
             <li>Hosting en VPS propio (1 año) ⭐</li>
             <li>Base AEO: legible para ChatGPT y Gemini ⭐</li>
+            <li>Velocidad optimizada: carga rápida en celular</li>
+            <li>Google Analytics: conoce a tus visitantes</li>
           </ul>
           <div class="svc-optional"><strong>Opcional:</strong> ChatBot REPLai Pilot integrado en la web — <strong>$950/mes</strong> adicionales. Requiere REPLai Pilot contratado.</div>
         </div>
@@ -415,7 +472,7 @@
         <div class="svc-info">
           <span class="svc-tag"><svg class="ico-svg"><use href="#i-chart"/></svg>PUBLICIDAD EN GOOGLE</span>
           <h3>MARKETING GOOGLE ADS</h3>
-          <p>Aparece en las primeras búsquedas cuando alguien busca tu servicio. Pagas solo cuando alguien hace clic.</p>
+          <p>Cuando alguien en tu ciudad busca tu servicio, apareces tú — no tu competencia. Y solo pagas cuando hacen clic.</p>
           <ul>
             <li>Research de keywords de tu ciudad</li>
             <li>Anuncios persuasivos + extensiones</li>
@@ -443,7 +500,7 @@
         <div class="svc-info">
           <span class="svc-tag"><svg class="ico-svg"><use href="#i-phone"/></svg>FACEBOOK + INSTAGRAM</span>
           <h3>MARKETING META ADS</h3>
-          <p>Llega a tus clientes donde pasan más tiempo. Setup de Business Manager, creación de páginas si no existen y Pixel instalado.</p>
+          <p>Tus clientes pasan horas al día en Facebook e Instagram. Ahí los encontramos, con todo incluido: creatividades, pauta y manejo.</p>
           <ul>
             <li><strong>Esencial ($4,500/mes):</strong> 1 video + 2 imágenes, reporte quincenal</li>
             <li><strong>Business ($7,500/mes):</strong> 2 videos + 4 imágenes, remarketing, A/B testing</li>
@@ -463,7 +520,7 @@
       </div>
     </div>
 
-    <div class="svc-see-more reveal" style="text-align:center"><a class="lnk" href="#aeo">⭐ NUEVO — AEO: que ChatGPT, Gemini y Google te recomienden → ver sección</a></div>
+    <div class="svc-see-more reveal" style="text-align:center"><a class="enlace" href="#aeo">⭐ NUEVO — AEO: que ChatGPT, Gemini y Google te recomienden → ver sección</a></div>
   </div>
 </div>
 
@@ -473,34 +530,34 @@
     <div class="sec-head reveal">
       <span class="svc-tag">NUEVO · PIONEROS EN MÉXICO</span>
       <h2 class="sec-t aeo-t">LA NUEVA FRONTERA: QUE LA IA RECOMIENDE TU NEGOCIO</h2>
-      <p class="sec-s">Tus clientes ya no solo buscan en Google: <strong>le preguntan a la IA</strong>. "¿Dónde fumigan cerca de mí?", "¿cuál es la mejor tintorería de la ciudad?" — y ChatGPT, Gemini, Perplexity y el nuevo modo IA de Google responden con nombres concretos de negocios.</p>
-      <p class="sec-s">Si tu web no puede ser leída por esas IAs, <strong>no existes en esa conversación</strong>. Y casi ninguna web puede: están hechas para personas, no para robots de IA. Eso lo resuelve el <strong>AEO (Answer Engine Optimization)</strong> — y prácticamente ninguna agencia en México lo ofrece. Nosotros sí.</p>
+      <p class="sec-s">Tus clientes ya no solo buscan en Google: <strong>le preguntan a la IA</strong>. "¿Dónde fumigan cerca de mí?", "¿cuál es la mejor tintorería de la ciudad?" — y ChatGPT, Gemini, Perplexity, Copilot y el nuevo modo IA de Google responden con nombres concretos de negocios.</p>
+      <p class="sec-s">Si tu web no puede ser leída por esas IAs, <strong>no existes en esa conversación</strong>. Eso lo resuelve el <strong>AEO (Answer Engine Optimization)</strong> — y prácticamente ninguna agencia en México lo ofrece. Nosotros sí.</p>
     </div>
     <div class="aeo-grid">
-      <div class="card aeo-card reveal">
+      <div class="carta aeo-card reveal">
         <div class="ic"><svg class="ico-svg"><use href="#i-search"/></svg></div>
-        <h3>AUDITORÍA AEO EXPRESS</h3>
-        <div class="aeo-pr"><span class="a">$700</span><span class="p">pago único</span></div>
-        <p>Descubre qué ve la IA cuando lee tu web. Informe completo de 8 ejes con nuestra herramienta propia, con doble pasada: lo que ve un robot de IA vs lo que ve una persona. Incluye veredicto claro y lista de fallas priorizadas.</p>
+        <h3>AUDITORÍA AEO + INFORME DE FALLAS</h3>
+        <div class="aeo-pr"><span class="a">$499</span><span class="p">pago único</span></div>
+        <p>Descubre exactamente qué ve la IA cuando lee tu web: informe de 8 ejes con doble pasada (robot vs persona), veredicto claro y lista de fallas priorizadas para corregir.</p>
       </div>
-      <div class="card aeo-card reveal">
+      <div class="carta aeo-card reveal">
         <div class="ic"><svg class="ico-svg"><use href="#i-tool"/></svg></div>
         <h3>IMPLEMENTACIÓN AEO</h3>
         <div class="aeo-pr"><span class="a">$1,750</span><span class="p">pago único</span></div>
-        <p>Dejamos tu web legible y citable para ChatGPT, Gemini y Perplexity: archivo llms.txt, contenido estructurado para que la IA te cite, datos estructurados de tu negocio y re-auditoría final <strong>mostrándote el salto de puntos</strong> antes y después.</p>
+        <p>Tu web queda legible y citable para ChatGPT, Gemini, Perplexity, Copilot y las demás IAs: llms.txt, contenido estructurado, datos de tu negocio y re-auditoría final <strong>mostrándote el salto de puntos</strong> antes y después.</p>
       </div>
-      <div class="card aeo-card reveal">
+      <div class="carta aeo-card reveal">
         <div class="ic"><svg class="ico-svg"><use href="#i-radar"/></svg></div>
         <h3>MONITOREO AEO</h3>
-        <div class="aeo-pr"><span class="a">$500</span><span class="p">/mes</span></div>
-        <p>Los modelos de IA cambian sus reglas cada mes. Reauditoría mensual + ajustes para que no te caigas de las respuestas de la IA. Pensado para negocios que ya invierten en su presencia digital.</p>
+        <div class="aeo-pr"><span class="a">$400</span><span class="p">/mes</span></div>
+        <p>Los modelos de IA cambian sus reglas cada mes. Reauditoría mensual + ajustes para que no te caigas de sus respuestas. Para negocios que ya invierten en su presencia digital.</p>
       </div>
     </div>
-    <p class="aeo-note reveal">AEO es un servicio OPCIONAL: súmalo a cualquier plan. La mayoría empieza con la auditoría de $700 y decide después.</p>
+    <p class="aeo-note reveal">AEO es un servicio OPCIONAL: súmalo a cualquier plan. La mayoría empieza con la auditoría de $499 y decide después.</p>
 
-    <div class="aeo-tool reveal">
+    <div class="aeo-tool carta reveal">
       <h3>NO VENDEMOS HUMO: MEDIMOS CON HERRAMIENTA PROPIA</h3>
-      <p class="sec-s">Desarrollamos nuestro propio <strong>Auditor AEO</strong>: analiza tu sitio con los mismos ojos de 21 robots de IA distintos, califica 8 ejes (acceso, lectura sin JavaScript, datos estructurados, citabilidad, entidad de marca…) y entrega un informe ejecutivo. Nadie más en el mercado local puede mostrar esto. <strong>Toca cada captura para verla en grande.</strong></p>
+      <p class="sec-s">Desarrollamos nuestro propio <strong>Auditor AEO</strong>: analiza tu sitio con los mismos ojos de <strong>21 robots de IA</strong> distintos — ChatGPT, Gemini, Perplexity, Copilot y más — califica 8 ejes (acceso, lectura sin JavaScript, datos estructurados, citabilidad, entidad de marca…) y entrega un informe ejecutivo. Nadie más en el mercado local puede mostrar esto. <strong>Toca cada captura para verla en grande.</strong></p>
       <div class="shot-grid">
         <figure class="shot reveal" role="button" tabindex="0"><img src="assets/captura-auditor-1-nota44.png" alt="Auditor AEO: web normal con nota 44 de 100" loading="lazy"><figcaption>Una web normal: 44/100 — el 100% de su contenido no existe para la IA</figcaption></figure>
         <figure class="shot reveal" role="button" tabindex="0"><img src="assets/captura-auditor-2-ejes.png" alt="Auditor AEO: diagnóstico por ejes" loading="lazy"><figcaption>Diagnóstico eje por eje, con veredicto</figcaption></figure>
@@ -510,12 +567,12 @@
     </div>
 
     <div class="aeo-case reveal">
-      <h3 class="aeo-case-t">CASO REAL: LA PRIMERA WEB QUE AUDITAMOS FUE LA NUESTRA</h3>
-      <p class="sec-s">Cuando terminamos nuestro Auditor AEO, la prueba de fuego era obvia: auditar nuestra propia web de GlennGO. Salió <strong>52 puntos de 100</strong>. Hoy, tras implementar todo lo que vendemos, está en <strong>97-100</strong>. Esta tecnología es tan nueva que aún no hay agencias compitiendo en ella — quién llegue primero, domina las respuestas de la IA en su ciudad.</p>
+      <h3 class="aeo-case-t">LO QUE ENCONTRAMOS EN CASI TODA WEB QUE RECIBIMOS</h3>
+      <p class="sec-s">Las webs que llegan a nuestras manos promedian <strong>38 a 52 puntos de 100</strong> ante la IA: invisibles para ChatGPT, Gemini y el nuevo Google. Después de nuestro trabajo de SEO + AEO, quedan en <strong>97-100</strong> — dentro de la respuesta que la IA le da a tu cliente cuando pregunta por un servicio como el tuyo.</p>
       <div class="aeo-counter">
-        <div class="ac-item"><div class="ac-num antes" data-count="52">52</div><div class="ac-lbl">ANTES</div></div>
+        <div class="ac-item"><div class="ac-num antes" data-count="52" data-prefix="38-">38-52</div><div class="ac-lbl">Al llegar a nosotros</div></div>
         <div class="ac-arrow">→</div>
-        <div class="ac-item"><div class="ac-num" data-count="97" data-suffix="-100">97-100</div><div class="ac-lbl">HOY</div></div>
+        <div class="ac-item"><div class="ac-num hoy" data-count="97" data-suffix="-100">97-100</div><div class="ac-lbl">Tras nuestro trabajo</div></div>
       </div>
     </div>
   </div>
@@ -525,18 +582,21 @@
 <div class="sec" id="planes">
   <div class="ctn">
     <div class="sec-head reveal">
+      <p class="micro">Inversión clara, sin sorpresas</p>
       <h2 class="sec-t">PLANES DE MARKETING DETALLADOS</h2>
       <p class="sec-s">Google Ads y Meta Ads con dos niveles cada uno. Precios claros y transparentes.</p>
     </div>
     <p class="promo-note reveal">Todos los precios de esta propuesta son de lanzamiento. Ajuste programado en ~2 meses.</p>
 
     <div class="plans-grid">
-      <!-- GOOGLE ESENCIAL -->
-      <div class="plan-card g reveal">
+      <!-- GOOGLE ESENCIAL ★ destacado -->
+      <div class="plan-card hot reveal">
+        <div class="plan-badge">⭐ PARA EMPEZAR</div>
         <div class="plan-hd">
           <div class="plan-nm">GOOGLE ADS<br>ESENCIAL</div>
           <div class="plan-pr"><span class="a">$4,000</span><span class="p">/mes</span></div>
-          <div class="plan-su">Setup: <strong>$2,500</strong> (pago único)</div>
+          <div class="plan-mes">Manejo + pauta incluidos</div>
+          <div class="plan-setup">Setup: <strong>$2,500</strong> pago único</div>
         </div>
         <div class="plan-bd">
           <ul>
@@ -551,11 +611,12 @@
       </div>
 
       <!-- GOOGLE BUSINESS -->
-      <div class="plan-card g reveal">
+      <div class="plan-card reveal">
         <div class="plan-hd">
           <div class="plan-nm">GOOGLE ADS<br>BUSINESS</div>
           <div class="plan-pr"><span class="a">$6,000</span><span class="p">/mes</span></div>
-          <div class="plan-su">Setup: <strong>$2,500</strong> (pago único)</div>
+          <div class="plan-mes">Manejo + pauta incluidos</div>
+          <div class="plan-setup">Setup: <strong>$2,500</strong> pago único</div>
         </div>
         <div class="plan-bd">
           <ul>
@@ -570,11 +631,12 @@
       </div>
 
       <!-- META ESENCIAL -->
-      <div class="plan-card m reveal">
+      <div class="plan-card reveal">
         <div class="plan-hd">
           <div class="plan-nm">META ADS<br>ESENCIAL</div>
           <div class="plan-pr"><span class="a">$4,500</span><span class="p">/mes</span></div>
-          <div class="plan-su">Setup: <strong>$2,000</strong> si no tienen redes (pago único)</div>
+          <div class="plan-mes">Manejo + pauta + creatividades</div>
+          <div class="plan-setup">Setup: <strong>$2,000</strong> si no tienen redes</div>
         </div>
         <div class="plan-bd">
           <ul>
@@ -589,11 +651,12 @@
       </div>
 
       <!-- META BUSINESS -->
-      <div class="plan-card m hot reveal">
+      <div class="plan-card reveal">
         <div class="plan-hd">
           <div class="plan-nm">META ADS<br>BUSINESS</div>
           <div class="plan-pr"><span class="a">$7,500</span><span class="p">/mes</span></div>
-          <div class="plan-su">Setup: <strong>$2,000</strong> si no tienen redes (pago único)</div>
+          <div class="plan-mes">Manejo + pauta + creatividades</div>
+          <div class="plan-setup">Setup: <strong>$2,000</strong> si no tienen redes</div>
         </div>
         <div class="plan-bd">
           <ul>
@@ -607,6 +670,7 @@
         </div>
       </div>
     </div>
+    <p class="note nota-teal reveal" style="margin-top:26px"><strong>CÓMO SE PAGA:</strong> todo plan arranca con el <strong>setup</strong> (pago único de configuración: cuentas, campañas, tracking) y después la <strong>mensualidad</strong> del plan. Sin setup no hay campaña: es el trabajo técnico que hace que cada peso rinda.</p>
   </div>
 </div>
 
@@ -614,11 +678,12 @@
 <div class="sec" id="combos">
   <div class="ctn">
     <div class="sec-head reveal">
+      <p class="micro">La mejor inversión</p>
       <h2 class="sec-t">PAQUETES QUE POTENCIAN TU INVERSIÓN</h2>
-      <p class="sec-s">Web + Google Ads + Meta (Facebook e Instagram). Servicios integrados que se multiplican: ahorra y obtén mejores resultados.</p>
+      <p class="sec-s">Web + Google Ads + Meta Ads (Facebook e Instagram) integrados: mejor precio y mejores resultados que por separado.</p>
     </div>
     <div class="combos">
-      <!-- COMBO 1: PRESENCIA DIGITAL (RECOMENDADO) -->
+      <!-- COMBO 1: PRESENCIA DIGITAL -->
       <div class="combo hot reveal">
         <div class="combo-badge">⭐ RECOMENDADO</div>
         <div class="combo-hd">
@@ -638,9 +703,9 @@
             <li>Setup Business Manager + Pixel</li>
             <li>Sistema de reseñas: QR + link directo por WhatsApp</li>
           </ul>
-          <p class="combo-addon">+ AEO opcional: auditoría $700 · implementación $1,750 · monitoreo $500/mes</p>
+          <p class="combo-addon">+ AEO opcional: auditoría $499 · implementación $1,750 · monitoreo $400/mes</p>
           <div class="combo-lbl">IDEAL PARA</div>
-          <p style="font-size:14px;color:var(--gr)">Negocios que quieren aparecer en Google y redes sociales desde el primer día, con presupuesto controlado y resultados medibles.</p>
+          <p style="font-size:14px;color:var(--tenue)">Aparecer en Google y redes desde el primer día, con presupuesto controlado y resultados medibles.</p>
         </div>
       </div>
 
@@ -664,40 +729,41 @@
             <li>Reportes quincenales con análisis estratégico</li>
             <li>Sistema de reseñas: QR + link directo por WhatsApp</li>
           </ul>
-          <p class="combo-addon">+ AEO opcional: auditoría $700 · implementación $1,750 · monitoreo $500/mes</p>
+          <p class="combo-addon">+ AEO opcional: auditoría $499 · implementación $1,750 · monitoreo $400/mes</p>
           <div class="combo-lbl">IDEAL PARA</div>
-          <p style="font-size:14px;color:var(--gr)">Negocios que quieren dominar su mercado: web + IA + Google + redes. Máxima presencia y automatización.</p>
+          <p style="font-size:14px;color:var(--tenue)">Dominar tu mercado: web + IA + Google + redes. Máxima presencia y automatización.</p>
         </div>
       </div>
     </div>
 
-    <!-- TABLA COMPARATIVA -->
+    <!-- TABLA COMPARATIVA (rediseñada) -->
     <div class="sec-head reveal" style="margin-top:56px">
-      <h2 class="sec-t" style="font-size:24px">COMPARATIVA COMPLETA</h2>
+      <p class="micro">Compara en 10 segundos</p>
+      <h2 class="sec-t" style="font-size:23px">¿QUÉ LLEVA CADA PAQUETE?</h2>
+      <p class="sec-s" style="font-size:14px">Todo con ✓ está incluido. El precio individual de cada servicio está en la sección de Servicios.</p>
     </div>
     <div class="tbl-wrap reveal">
     <table class="tbl">
-      <thead><tr><th>SERVICIO</th><th>INDIVIDUAL</th><th>PRESENCIA DIGITAL ⭐</th><th>IMPULSO TOTAL</th></tr></thead>
+      <thead><tr><th>Servicio</th><th class="si">Presencia Digital ⭐</th><th class="si">Impulso Total</th></tr></thead>
       <tbody>
-        <tr><td>Web profesional SEO</td><td class="chk">$5,300</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-        <tr><td>Google Ads Esencial</td><td class="chk">$4,000/mes</td><td class="chk">✓</td><td class="crs">—</td></tr>
-        <tr><td>Google Ads Business</td><td class="chk">$6,000/mes</td><td class="crs">—</td><td class="chk">✓</td></tr>
-        <tr><td>Meta Esencial (1 video + 2 imgs)</td><td class="chk">$4,500/mes</td><td class="chk">✓</td><td class="crs">—</td></tr>
-        <tr><td>Meta Business (2 videos + 4 imgs + remarketing)</td><td class="chk">$7,500/mes</td><td class="crs">—</td><td class="chk">✓</td></tr>
-        <tr><td>REPLai Pilot (WhatsApp IA 24/7)</td><td class="chk">$2,990 + mensual</td><td class="crs">—</td><td class="chk">✓</td></tr>
-        <tr><td>ChatBot web integrado</td><td class="chk">$950/mes</td><td class="crs">—</td><td class="chk">✓</td></tr>
-        <tr><td>AEO (opcional)</td><td class="crs">—</td><td class="chk">Add-on $700+</td><td class="chk">Add-on $700+</td></tr>
-        <tr><td>Sistema de reseñas (QR + WhatsApp)</td><td class="crs">—</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-        <tr><td>Reportes quincenales</td><td class="chk">En planes Ads</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-        <tr style="border-top:2px solid var(--b)"><td><strong>SETUP TOTAL</strong></td><td>Variable</td><td><strong class="em">$8,500</strong></td><td><strong class="em">$11,000</strong></td></tr>
-        <tr><td><strong>MENSUALIDAD TOTAL</strong></td><td>Variable</td><td><strong class="em">$8,000/mes</strong></td><td><strong class="em">$14,950/mes</strong></td></tr>
+        <tr><td>Web profesional SEO (1 año)</td><td class="si chk">✓</td><td class="si chk">✓</td></tr>
+        <tr><td>Google Ads Esencial</td><td class="si chk">✓</td><td class="si crs">—</td></tr>
+        <tr><td>Google Ads Business</td><td class="si crs">—</td><td class="si chk">✓</td></tr>
+        <tr><td>Meta Esencial (1 video + 2 imgs)</td><td class="si chk">✓</td><td class="si crs">—</td></tr>
+        <tr><td>Meta Business (2 videos + 4 imgs)</td><td class="si crs">—</td><td class="si chk">✓</td></tr>
+        <tr><td>REPLai Pilot (IA WhatsApp 24/7)</td><td class="si crs">—</td><td class="si chk">✓</td></tr>
+        <tr><td>ChatBot web integrado</td><td class="si crs">—</td><td class="si chk">✓</td></tr>
+        <tr><td>Sistema de reseñas (QR + WhatsApp)</td><td class="si chk">✓</td><td class="si chk">✓</td></tr>
+        <tr><td>Reportes quincenales</td><td class="si chk">✓</td><td class="si chk">✓</td></tr>
+        <tr><td>AEO (opcional, se suma a cualquiera)</td><td class="si" style="color:#3fc6c9;font-weight:700">desde $499</td><td class="si" style="color:#3fc6c9;font-weight:700">desde $499</td></tr>
+        <tr class="tbl-total" style="border-top:2px solid var(--borde)"><td><strong>Setup inicial (pago único)</strong></td><td class="si"><span class="em-setup">$8,500</span></td><td class="si"><span class="em-setup">$11,000</span></td></tr>
+        <tr class="tbl-total"><td><strong>Mensualidad</strong></td><td class="si"><span class="em">$8,000</span><span style="font-size:11px;color:var(--tenue)">/mes</span></td><td class="si"><span class="em">$14,950</span><span style="font-size:11px;color:var(--tenue)">/mes</span></td></tr>
       </tbody>
     </table>
     </div>
 
-    <!-- VERIFICACIÓN DE CUENTAS -->
     <div class="note reveal" style="margin-top:24px">
-      <strong>¿De dónde salen los números?</strong><br>
+      <strong>¿DE DÓNDE SALEN LOS NÚMEROS?</strong><br>
       <strong>Presencia Digital:</strong> Setup: Web $5,300 + Google $2,500 + Meta $2,000 = $9,800 → combo <strong>$8,500</strong>. Mensual: Google Esencial $4,000 + Meta Esencial $4,500 = $8,500 → combo <strong>$8,000/mes</strong>.<br>
       <strong>Impulso Total:</strong> Setup: Web $5,300 + REPLai $2,990 + Google $2,500 + Meta $2,000 = $12,790 → combo <strong>$11,000</strong>. Mensual: Google Business $6,000 + Meta Business $7,500 + REPLai ~$1,500 + ChatBot $950 = $15,950 → combo <strong>$14,950/mes</strong>.
     </div>
@@ -708,26 +774,28 @@
 <div class="sec" id="proceso">
   <div class="ctn">
     <div class="sec-head reveal">
+      <p class="micro">Método probado</p>
       <h2 class="sec-t">CÓMO SE IMPLEMENTA</h2>
-      <p class="sec-s">Trabajamos por etapas. Cada una depende de los accesos y respuestas del cliente.</p>
+      <p class="sec-s">Proceso afinado paso a paso: primero dejamos TODO listo y midiendo, después aceleramos. Así ningún peso se desperdicia.</p>
     </div>
     <div class="tl">
-      <div class="tl-i active reveal"><div class="tl-n">1</div><div class="tl-c"><h4>DIAGNÓSTICO Y SETUP</h4><p>Creación de cuentas, configuración de plataformas, research de keywords y diseño web. Reunión inicial de 30 minutos para entender tu negocio.</p><span class="t">ETAPA INICIAL</span></div></div>
-      <div class="tl-i reveal"><div class="tl-n">2</div><div class="tl-c"><h4>LANZAMIENTO DE CAMPAÑAS</h4><p>Google Ads activo con keywords, pujas y extensiones. Meta Ads con primeras creatividades. Verificación de conversiones funcionando.</p><span class="t">ETAPA DE ACTIVACIÓN</span></div></div>
-      <div class="tl-i reveal"><div class="tl-n">3</div><div class="tl-c"><h4>OPTIMIZACIÓN E IA</h4><p>REPLai Pilot operativo en WhatsApp. Ajuste de pujas, pausa de keywords que no convierten. Primeras creatividades de Meta publicadas.</p><span class="t">ETAPA DE OPTIMIZACIÓN</span></div></div>
-      <div class="tl-i reveal"><div class="tl-n">4</div><div class="tl-c"><h4>PRIMER REPORTE Y AJUSTES</h4><p>Entrega del primer reporte quincenal con datos reales. Análisis de costo por lead, mejores keywords, ajustes y siguientes pasos estratégicos.</p><span class="t">ETAPA DE MEDICIÓN</span></div></div>
+      <div class="tl-i active reveal"><div class="tl-n">1</div><div class="tl-c"><h4>DIAGNÓSTICO Y SETUP</h4><p>Reunión de 30 minutos para entender tu negocio. Creamos y vinculamos cuentas (Google, Meta, Analytics), research de keywords y arranca el diseño de tu web.</p><span class="t">Semana 1</span></div></div>
+      <div class="tl-i reveal"><div class="tl-n">2</div><div class="tl-c"><h4>TODO LISTO PARA VENDER</h4><p>Tu web queda publicada y medida, REPLai Pilot responde tu WhatsApp y la base AEO hace tu sitio legible para las IAs. Todo rastreando desde el primer clic.</p><span class="t">Semana 2</span></div></div>
+      <div class="tl-i reveal"><div class="tl-n">3</div><div class="tl-c"><h4>LANZAMIENTO DE CAMPAÑAS</h4><p>Con el terreno preparado, salen tus campañas de Google y Meta con conversiones verificadas. Cada peso invertido se mide desde el día uno.</p><span class="t">Semana 3</span></div></div>
+      <div class="tl-i reveal"><div class="tl-n">4</div><div class="tl-c"><h4>REPORTE Y OPTIMIZACIÓN</h4><p>Cada 15 días: reporte claro con leads, costo por lead y siguientes pasos. Pausamos lo que no funciona, potenciamos lo que sí. Tu inversión, en números.</p><span class="t">Continuo</span></div></div>
     </div>
-    <p class="note reveal"><strong>LO QUE NECESITAMOS DE TI:</strong> dirección verificable (para Google Maps), acceso a cuentas Google, mínimo 10 fotos del negocio y tu WhatsApp Business. Te guiamos paso a paso en todo.</p>
+    <div class="note nota-teal reveal" style="text-align:center"><strong>Esto no es un gasto: es una inversión</strong> — se mide, se reporta y se optimiza para que la veas crecer en cada reporte.</div>
   </div>
 </div>
 
 <!-- ========== CTA ========== -->
 <div class="cta" id="contacto">
   <div class="ctn" style="position:relative;z-index:2">
-    <h2 class="sec-t" style="font-size:30px">¿HABLAMOS?</h2>
-    <p class="sec-s" style="margin-top:8px">Activación al recibir accesos y pago de setup.</p>
-    <a href="https://wa.me/522295234432" class="cta-btn">ACEPTAR PROPUESTA E INICIAR</a>
-    <p style="margin-top:24px;font-size:14px;color:var(--gr)">GlennGO · Agencia de Inteligencia Artificial · <strong style="color:var(--c)">Glenn Gómez</strong></p>
+    <p class="micro">El siguiente paso es tuyo</p>
+    <h2 class="sec-t" style="font-size:31px">TU COMPETENCIA YA ESTÁ INVIRTIENDO</h2>
+    <p class="sec-s" style="margin-top:8px">Cuéntame qué necesita tu negocio y te cotizo a la medida por WhatsApp. Sin compromiso, sin tecnicismos.</p>
+    <a href="https://wa.me/522295234432" class="cta-btn">QUIERO MÁS CLIENTES — HABLEMOS YA</a>
+    <p style="margin-top:24px;font-size:14px;color:var(--tenue)">GlennGO · Agencia de Inteligencia Artificial · <strong style="color:var(--texto)">Glenn Gómez</strong></p>
   </div>
 </div>
 
@@ -736,13 +804,11 @@
   <div class="ctn">
     <div class="gn">GLENNGO</div>
     <p>Propuesta válida 30 días · Precios en MXN · IVA no incluido · Precios promocionales de lanzamiento</p>
-    <p>WhatsApp: <a class="lnk" href="https://wa.me/522295234432">+52 229 523 4432</a></p>
+    <p>WhatsApp: <a class="enlace" href="https://wa.me/522295234432">+52 229 523 4432</a></p>
   </div>
 </div>
 
-<!-- ========== MODAL CAPTURAS (se llena por JS) ========== -->
-
-<!-- ========== SCROLL REVEAL + NAV + CONTADORES + MODAL ========== -->
+<!-- ========== SCROLL REVEAL + NAV + CONTADORES + MODAL + PROGRESO ========== -->
 <script>
 (function(){
   const io = new IntersectionObserver(function(entries){
@@ -755,13 +821,18 @@
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
 
-  // Nav: fondo más sólido al hacer scroll
+  // Nav bg + barra de progreso de lectura
   const tb = document.getElementById('topbar');
-  function onScroll(){ if (window.scrollY > 10) { tb.classList.add('scrolled'); } else { tb.classList.remove('scrolled'); } }
+  const pr = document.getElementById('progreso');
+  function onScroll(){
+    if (window.scrollY > 10) { tb.classList.add('scrolled'); } else { tb.classList.remove('scrolled'); }
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    pr.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+  }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  // Contadores animados (countUp ease-out 1.2s)
+  // Contadores animados (ease-out 1.2s, soporta prefijo y sufijo)
   function countUp(el){
     const target = parseInt(el.dataset.count, 10) || 0;
     const pre = el.dataset.prefix || '';
