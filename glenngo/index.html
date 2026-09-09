@@ -270,6 +270,13 @@
   .faq .r{padding:0 0 16px;font-size:13.5px;color:var(--tenue);line-height:1.7}
   .faq .r strong{color:var(--texto)}
 
+  /* ══ MANEJO (chips de ciclo) ══ */
+  .manejo-box{margin-top:26px;padding:26px 28px}
+  .piloto{font-size:19px;font-weight:700;line-height:1.55;color:var(--texto);border-left:3px solid var(--acento);padding-left:16px;margin-bottom:20px}
+  .piloto strong{color:#3fc6c9}
+  .manejo-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+  .mchip{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#3fc6c9;background:rgba(10,147,150,.08);border:1px solid rgba(10,147,150,.25);border-radius:100px;padding:7px 14px}
+
   /* ══ GARANTÍA ══ */
   .gar-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:26px}
   .gar-item{text-align:center;padding:24px 18px}
@@ -519,8 +526,8 @@
         </div>
         <div class="svc-price">
           <div class="lbl">DESDE</div>
-          <div class="amt">$4,000</div>
-          <div class="per">/ mes · Manejo + pauta mínima</div>
+          <div class="amt">$5,000</div>
+          <div class="per">/ mes · Gestión completa + pauta mínima</div>
           <div class="setup-box">
             <div class="setup-lbl">SETUP PAGO ÚNICO</div>
             <div class="setup-amt">$2,500</div>
@@ -630,19 +637,19 @@
         <div class="plan-badge">⭐ PARA EMPEZAR</div>
         <div class="plan-hd">
           <div class="plan-nm">GOOGLE ADS<br>ESENCIAL</div>
-          <div class="plan-pr"><span class="a">$4,000</span><span class="p">/mes</span></div>
-          <div class="plan-mes">Manejo + pauta incluidos</div>
+          <div class="plan-pr"><span class="a">$5,000</span><span class="p">/mes</span></div>
+          <div class="plan-mes">Gestión + pauta incluidos</div>
           <div class="plan-setup">Setup: <strong>$2,500</strong> pago único</div>
         </div>
         <div class="plan-bd">
           <ul>
-            <li>Manejo profesional mensual</li>
+            <li>Gestión profesional semanal</li>
             <li>5 grupos de keywords</li>
             <li>3 versiones de anuncios</li>
             <li>Conversiones configuradas</li>
             <li>Reporte quincenal</li>
           </ul>
-          <div class="plan-break">Manejo: $2,000 + Pauta mínima: $2,000<br>(puedes invertir más en pauta si gustas)</div>
+          <div class="plan-break">Gestión profesional completa: $3,000 + Tu pauta: $2,000 (se le paga a Google)<br>(puedes invertir más en pauta si gustas)</div>
         </div>
       </div>
 
@@ -650,8 +657,8 @@
       <div class="plan-card reveal">
         <div class="plan-hd">
           <div class="plan-nm">GOOGLE ADS<br>BUSINESS</div>
-          <div class="plan-pr"><span class="a">$6,000</span><span class="p">/mes</span></div>
-          <div class="plan-mes">Manejo + pauta incluidos</div>
+          <div class="plan-pr"><span class="a">$7,000</span><span class="p">/mes</span></div>
+          <div class="plan-mes">Gestión + pauta incluidos</div>
           <div class="plan-setup">Setup: <strong>$2,500</strong> pago único</div>
         </div>
         <div class="plan-bd">
@@ -662,7 +669,7 @@
             <li>Extensiones completas (sitelinks, llamadas, ubicación, callouts)</li>
             <li>Reporte quincenal + análisis</li>
           </ul>
-          <div class="plan-break">Manejo: $2,500 + Pauta mínima: $3,500<br>(puedes invertir más en pauta si gustas)</div>
+          <div class="plan-break">Gestión profesional completa: $3,500 + Tu pauta: $3,500 (se le paga a Google)<br>(puedes invertir más en pauta si gustas)</div>
         </div>
       </div>
 
@@ -706,7 +713,21 @@
         </div>
       </div>
     </div>
-    <p class="note nota-teal reveal" style="margin-top:26px"><strong>CÓMO SE PAGA:</strong> todo plan arranca con el <strong>setup</strong> (pago único de configuración: cuentas, campañas, tracking) y después la <strong>mensualidad</strong> del plan. Sin setup no hay campaña: es el trabajo técnico que hace que cada peso rinda.</p>
+    <div class="manejo-box carta reveal">
+      <p class="piloto">"La <strong>pauta</strong> es la <strong>gasolina</strong>. Nuestra <strong>gestión</strong> es el <strong>piloto</strong>. Con mal piloto, hasta el mejor combustible se estrella."</p>
+      <p class="micro">Lo que hace tu gestión, cada semana</p>
+      <div class="manejo-chips">
+        <span class="mchip">Negativas y búsquedas basura fuera</span>
+        <span class="mchip">Ajuste de pujas y presupuesto</span>
+        <span class="mchip">Monitoreo de conversiones</span>
+        <span class="mchip">GBP + reseñas al día</span>
+        <span class="mchip">Reporte quincenal con análisis</span>
+      </div>
+    </div>
+    <div class="note reveal" style="margin-top:18px">
+      <strong>DATOS REALES, NO OPINIONES:</strong> reporte de una cuenta de fumigación de Toluca con su agencia anterior: CPC de <strong>$36</strong> en Búsqueda (el mercado local paga $4–8), Performance Max <strong>muerta 2 semanas seguidas</strong>, 92% de los clics de remarketing desde ciudades sin cobertura (Puebla, Mérida, Monterrey…) y <strong>0 conversiones</strong>. La pauta se gastó igual. <strong>El manejo es lo que decide si tu inversión se convierte en clientes.</strong>
+    </div>
+    <p class="note nota-teal reveal" style="margin-top:18px"><strong>CÓMO SE PAGA:</strong> todo plan arranca con el <strong>setup</strong> (pago único de configuración: cuentas, campañas, tracking) y después la <strong>mensualidad</strong> del plan. La <strong>pauta se le paga a Google, no a nosotros</strong> — nuestro trabajo es que cada peso de esa pauta se convierta en clientes.</p>
   </div>
 </div>
 
@@ -801,8 +822,8 @@
 
     <div class="note reveal" style="margin-top:24px">
       <strong>¿DE DÓNDE SALEN LOS NÚMEROS?</strong><br>
-      <strong>Presencia Digital:</strong> Setup: Web $5,300 + Google $2,500 + Meta $2,500 = $10,300 → combo <strong>$8,500</strong>. Mensual: Google Esencial $4,000 + Meta Esencial $4,500 = $8,500 → combo <strong>$8,000/mes</strong>.<br>
-      <strong>Impulso Total:</strong> Setup: Web $5,300 + REPLai $2,990 + Google $2,500 + Meta $2,500 = $13,290 → combo <strong>$11,000</strong>. Mensual: Google Business $6,000 + Meta Business $7,500 + REPLai ~$1,500 + ChatBot $950 = $15,950 → combo <strong>$14,950/mes</strong>.
+      <strong>Presencia Digital:</strong> Setup: Web $5,300 + Google $2,500 + Meta $2,500 = $10,300 → combo <strong>$8,500</strong>. Mensual: Google Esencial $5,000 + Meta Esencial $4,500 = $9,500 → combo <strong>$8,000/mes</strong>.<br>
+      <strong>Impulso Total:</strong> Setup: Web $5,300 + REPLai $2,990 + Google $2,500 + Meta $2,500 = $13,290 → combo <strong>$11,000</strong>. Mensual: Google Business $7,000 + Meta Business $7,500 + REPLai ~$1,500 + ChatBot $950 = $16,950 → combo <strong>$14,950/mes</strong>.
     </div>
   </div>
 </div>

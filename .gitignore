@@ -1,2 +1,4 @@
 # Artefactos de navegador/sesión (no commitear)
 .playwright-mcp/
+# Documentos internos y datos de clientes (NUNCA al repo)
+docs/
